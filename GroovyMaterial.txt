@@ -405,6 +405,487 @@ Groovy Language:
     -JSON
     -XML
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+
+1.Language Fundamentals
+
+1.1.Type system
+1.2.literals
+1.3.variables
+1.4.operators
+1.5.control structures
+1.6.iterators/loops
+
+Types ,literals ,variables:
+.............................
+Groovy is dynamic , static typed programming lanugage.
+
+variables are other wise called as "identifiers"
+
+syntax:
+
+Strong typing
+ 
+type variable=value
+
+eg;
+ int a =10;
+
+There are two types of datatype
+
+1.primitive  -  int,float,char,boolean....
+2.complex/userdefined/ data type - Object types - Customer/Employee....
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Lab:
+
+strongtype.groovy
+//Strong typing
+/**
+ * Primitive Types in java
+ *  -integers
+ *      byte
+ *        -128 to 127
+ *        1 byte
+ *      short
+ *       -32,768 to 32767
+ *       2 bytes
+ *      int
+ *       -2Powof31 to 2powerof32
+ *       4 bytes
+ *       long
+ *       - -2power63 to 2powerof64
+ *       8 bytes
+ *
+ *  -float
+ *     float - 4bytes
+ *     double -8bytes
+ *  -char
+ *    char- 16 bit unicode char
+ *  -boolean
+ *     boolean
+ *     1 bit - 0 / 1
+ *
+ *  Reference type/Object Types
+ *  Employee e = new Employee();
+ *  e - reference variable
+ *  Employee - type
+ *
+ *  Strings are reference types
+ *
+ */
+int a = 10;
+float f = 10.5;
+char c = 'A';
+boolean isActive = true;
+double d = 10.89;
+short s = 400000;
+long l = 100000000;
+byte b = 900;
+
+//Reference type
+String str = "Hello Groovy";
+
+System.out.println(" Integer " + a);
+println("Float " + f);
+println "Character " + c;
+println "Boolean " + isActive;
+println "double" + d;
+println "Short " + s;
+println "Long " + l;
+println "byte  " + b;
+println "String " + str
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Weak Typing / Dynamic Typing:
+............................
+
+The type of variable is not known during compile time.
+
+syntax;
+
+def identifier(variable)=value(literal)
+
+def - keyword
+
+//Dynamic typing
+
+//int x=10;
+//x ="hello";
+def myvar = 100;
+println "MyVar " + myvar;
+myvar = "Hello";
+println "MyVar " + myvar;
+myvar = true;
+println "MyVar " + myvar;
+myvar = 10.6;
+println "MyVar " + myvar;
+myvar = 'c';
+println "MyVar " + myvar;
+////////////////////////////////////////////////////////////////////////////////////////////
+
+How to know the Type of Identifier?
+  
+def myvar=100;
+
+instanceof operator used to know the type of variable.
+
+instanceof operator works only with reference types
+
+myvar instanceof int -  compile time error
+
+int -primitive -Reference type for Integer
+
+java provides prmitive data eq Object type(Reference types) which are called "Wrapper Classes".
+   Every prmitive type eq Reference type is there
+
+ byte   - Byte 
+  :The Byte class wraps a value of primitive type byte in an object.
+ short  -  Short
+ int    - Integer
+ long   -Long
+ float  -Float
+ double -Double 
+ boolean -Boolean
+ char    - Character 
+ NOPrimitive ------String
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Code challange:
+...............
+In java, i want to store the below number, findout right data type.
+
+myvariable =2232333333333333333333333333333333333331212121212092347329473433483473984732948734983473984739473498473289472394238437498479487948749387492479479347943794479;
+
+
+//Identify the type of variable.
+//instance of operator tells that the variable belongs to what type ?
+//either byte /short/long/int.
+//variableName instanceof Type
+
+def myvar = 1;
+println "My var instance of   : " + myvar instanceof Byte;
+println "My var instance of   : " + myvar instanceof Short;
+println "My var instance of   : " + myvar instanceof Integer;
+println "My var instance of   : " + myvar instanceof Long;
+println "My var instance of   : " + myvar instanceof Float;
+println "My var instance of   : " + myvar instanceof Double;
+println "My var instance of   : " + myvar instanceof BigInteger;
+println "With out string concation"
+println myvar instanceof Integer
+println myvar instanceof Short
+println myvar instanceof Byte
+println myvar instanceof Long
+
+println "initalizing with long numbers"
+myvar = 999999999999999;
+println myvar instanceof Integer
+println myvar instanceof Short
+println myvar instanceof Byte
+println myvar instanceof Long
+println "initalizing with big  numbers"
+myvar = 9999999999999999777777777777777777777777777777777777777777777777777777777777777777;
+println myvar instanceof Integer
+println myvar instanceof Short
+println myvar instanceof Byte
+println myvar instanceof Long
+println myvar instanceof BigInteger
+/////////////////////////////////////////////////////////////////////////////////
+println "String identification"
+myvar = "hello world"
+println myvar instanceof String;
+println "Character identification"
+myvar = 'A';
+println myvar instanceof Character;
+println myvar instanceof String;
+////////////////////////////////////////////////////////////////////////////////////////////
+println "Boolean identification"
+myvar = true;
+println myvar instanceof Boolean;
+/////////////////////////////////////////////////////////////////////////////////////////////////
+println "Decimal identification"
+myvar = 10.89000;
+println myvar instanceof Float; //false
+println myvar instanceof Double; //false
+println myvar instanceof BigDecimal; //true
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+Type conversion:
+...............
+
+Java : 
+
+int a = 10;
+
+int - type
+a - variable/identifier
+10- value/literal
+
+what is type of a?
+  int
+
+how do you say type of a?
+ based on type only not based on value.
+
+Is there any type for value?
+
+ what is type of 10 - ?
+
+Yes!....
+
+in Integer family : the default type of value is "int"
+
+int a =10;
+
+a's type is int
+10's type is also int.
+
+Type conversion :
+ Converting from one type to another type.
+
+ int to byte
+
+Types of conversion:
+
+ - Implicit conversion
+     conversion is taken automatically.
+     byte b =10;  ===byte ==int
+    here 10(int) is converted into byte.   
+   int b =9000; ==>int === int
+
+ - Explicit conversion
+      We need to convert manually.
+  While conversion there is possibility of data loss.
+   
+   Syntax
+ 
+      targettype = (targetype)sourcetype
+      byte b = (byte)900;
+  
+      int a = 10; //10 type is int---size 4 bytes
+        byte b = 19; // 19 type is ? - int only  // byte(2) === int(4)
+        //byte b1 =9000; // here 9000 cant be stored inside b1 because b1 capacity is lesser than value
+        //what if i want to store 9000 inside b1
+        //type conversion
+        byte b2 = (byte)10000;
+        System.out.println(b2);
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Decimal numbers:
+................
+What is default type of decimals?
+
+float price = 10.5;  // float === double === 4 bytes ===8 bytes- error
+
+what is type of 10.5?
+  double.
+
+type conversion for floating points
+
+ways:
+
+1. by adding f suffix
+	
+        float price = 10.5f;
+
+here 10.5(double) is converted into float.
+
+2.by using () syntax
+      float price1 = (float) 10.5;
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Characters:
+
+the value of char type is int
+
+        char c = 'A'; //int
+        char c1 = 99; //int
+        System.out.println(c1 + " " + c);
+        System.out.println((char) c1 + " " + (int) c);
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Groovy  Type Conversion:
+//////////////////////////
+Groovy mostly takes care of type conversion implicitly.
+
+//type conversion
+//int is converted to byte.
+byte b = 10000;
+println b;
+byte b1 = (byte) 10000;
+println b1;
+
+float f = 10.5;
+float f1 = 10.5f;
+
+println f;
+println f1;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Dynamic typing and type conversion
+
+def myvar = 100;
+println myvar instanceof Integer /// int
+//What if i want to convert into Short, i want to represent in side short/long/byte
+def myvar2 = 100 as Short;
+println myvar2 instanceof Integer /// int
+println myvar2 instanceof Short /// int
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Other Type conversion:
+......................
+
+1.Boxing
+2.Unboxing
+ 
+Boxing and Un boxing : converting primitive to wrapper and wrapper to primitive
+ Integer j = 10;
+ int y = j * 10;
+ System.out.println(y);
+
+//type conversion
+//int is converted to byte.
+byte b = 10000;
+println b;
+byte b1 = (byte) 10000;
+println b1;
+
+float f = 10.5;
+float f1 = 10.5f;
+
+println f;
+println f1;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Dynamic typing and type conversion
+
+def myvar = 100;
+println myvar instanceof Integer /// int
+//What if i want to convert into Short, i want to represent in side short/long/byte
+def myvar2 = 100 as Short;
+println myvar2 instanceof Integer /// int
+println myvar2 instanceof Short /// int
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Integer j = 10;
+int y = j * 10;
+println y;
+
+def x = 100;
+def result = x * 100;
+println result;
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Comments;
+
+1.single line comment:
+
+//
+
+2.Muliti line comment
+/*
+
+*/
+
+3.Groovydoc comment
+ /**
+ *
+ *
+ /
+
+4.Shebang line
+
+#! /user/bin/env/ groovy
+
+  This for running script directly from the commandline in unix operating system.
+
+///////////////////////////////////////////////////////////////////////////////////////////
+                            Key words from groovy
+
+
+NOte: 
+
+ Keywords cant be used as value or variable in groovy.
+
+ eg: 
+ as, breakcase,catch,class, instance of,for, goto def, enum do, const,...........
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Coding Best practices for identifier(variable)
+...............................................
+
+- starts with letter,
+- starts with $
+- starts with _
+- not with numbers
+ 
+/////////////////////////////////////////////////////////////////////////////////////////////
+Values:
+
+1.Strings
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
