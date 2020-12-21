@@ -830,29 +830,493 @@ Coding Best practices for identifier(variable)
 - not with numbers
  
 /////////////////////////////////////////////////////////////////////////////////////////////
-Values:
 
-1.Strings
+Difference with Java:
+.....................
 
+Groovy makes code as simple as possible.Groovy uses lot of boilerplate code on behalf of us.
 
+Typical java program structure :
 
+package com.mycompany.project.module.submodule;
 
-
-
-
-
-
-
-
+import java.util.*;
+import java.math.BigInteger;
 
 
+public class MyClass{
+
+ public static void main(String args[]){
+
+ }
+ 
+}
+
+Groovy Program Structure: Script style,Class based
 
 
+package is optional
+
+most of the import statements are optionals
 
 
+script code .....
+  -variables ... def a=10; double price=1000;
+
+  -function declarations...
+
+class style:
+
+package 
+
+import statments you can have....
+
+class MyClass{
+ 
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+1.Default imports.
+
+Java :
+
+  java.lang package is default.
+
+package is logical grouping of code(classes and interfaces).
+packages are represented physically as collection of folders.
+
+eg:
+   package com.mycom
+
+com is folder
+mycom is another folder.
+
+Types of packages:
+
+1.in built packages 
+   - packages are offered by language itself.
+ in built packages starts with java javax
+
+java.lang
+java.util
+java.math
+java.io
+java.net
+java.sql
+.....etc...
+
+javax.servlet
+
+Note: we cant keep any built in packages for our own packages.
 
 
+2.custom packages
+  packages are created by application developers
 
+ com - company
+ org -organization
+
+Syntax / Naming standards:
+
+  com.companyname.projectname.module.submodule.
+
+  com.microgenesis.pms;
+
+  com.microgenesis.pms.profile
+
+
+  com.microgenesis.pms.profile.search
+
+  
+3.Third party packages
+
+  packages are distributed by commnity
+
+ com.atlassian.jira.issue.comments
+ com.atlassian.jira.api
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Grooy has lot of default packages; you dont need to import them.
+
+1.java.io.*;
+2.java.lang.*;
+3.java.math.BigDecimal
+4.java.math.BigInteger
+5.java.net.*
+6.java.util.*
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Groovy language also has its own packages
+
+ Groovy has extend from java, which supports all java packages + who supports extra packages.
+
+groovy.XXX
+
+groovy.lang.*;
+groovy.util.*;
+////////////////////////////////////////////////////////////////////////////////////////////
+
+; and groovy
+
+In groovy ; optional.
+
+
+////////////////////////////////*************************///////////////////////////////////
+
+Values In Groovy:
+.................
+
+1.Strings && Characters
+2.Numbers
+3.Booleans
+4.Lists
+5.Arrays
+6.Map
+7.Objects
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Strings:
+ Text literals are represented in the form of collection of characters called strings.
+ Strings are Objects.
+ Strings are instance of java.lang.String class as well as groovy.lang.GString
+ Characters in groovy is represented in String object.
+ Each character is 16-bit unicode character.
+
+
+String declaration Patterns:
+............................
+
+1.single quoted  - ''
+2.Double quoted  = "" 
+3.Triple  Single Quoted = '''
+4.Triple double quoted = """
+5.slashy quoted - / /
+6.Dollar slashy quoted - $/ /
+
+///////////////////////////////////////////////////////////////////////////////////////////// 
+
+1.single quoted:
+
+def singleStr = 'Hello,SingleQuoted Strings '
+println singleStr instanceof java.lang.String;
+println singleStr;
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+2.Double qutoed
+
+def doubleQuotes = "Hello,Double Quotes"
+println doubleQuotes instanceof java.lang.String;
+println doubleQuotes;
+
+String Concatnation;
+....................
+println "............................."
+def name = "Subramanian";
+def greeting = 'Hello ' + name;
+println greeting;
+println greeting instanceof java.lang.String;
+greeting = "Hello " + name;
+println greeting;
+println greeting instanceof java.lang.String;
+
+Interpolation:
+ -It is replacement of existing string concation
+ -way of access variables/expression inside string is so different
+ -This feature is not available in java language
+ 
+in order to add interpolation syntax, groovy has added a new class groovy.lang.GString
+
+GString Syntax:
+
+ "${expression}"
+ "$expression"
+println "..........String Interpoltion : GString..................."
+
+def firstName = "Subramaian";
+def newGreeting = "Hello ${firstName}";
+println newGreeting;
+println newGreeting instanceof java.lang.String
+println(newGreeting instanceof groovy.lang.GString)
+//simplified version
+newGreeting = "Hello $firstName";
+println newGreeting;
+//numerical expression
+def salary =1000;
+def noofdays =100;
+def totalSalary ="Total Salary is ${salary * noofdays}"
+println("$totalSalary")
+
+Note: single quote cant have string interpolation - $
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Mutil Line Strings:
+...................
+
+How to write multi line strings in java
+
+    String title = "Micro";
+        String doc = "<html>" +
+                "<head>" +
+                "<title>" + title + "</title>" +
+                "<body>" +
+                "<h1> Hello</h1>" +
+                "</body>" +
+                "</body></html>";
+        System.out.println(doc);
+
+Groovy Multi line strings:
+ -triple quote single quto 
+
+println "..........Multi line : triple single quote..................."
+
+def htmlDoc = ''' 
+   <html>
+      <title>Micro</title>
+      <body>
+         <h1> Hello</h1>
+      </body>
+     </html>
+'''
+println htmlDoc;
+
+-triple quote double quote : With String interpolation.
+
+println "..........Multi line : triple double quote..................."
+def title = 'Micro Technology';
+def htmlnewDoc = """
+   <html>
+      <title>$title</title>
+      <body>
+         <h1>Hello</h1>
+      </body>
+     </html>
+"""
+println htmlnewDoc;
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Escaping Special Characters:
+............................
+
+//here i want to print single
+def quote = " Hello ! how are you? \\ i am fine what \" about you ";
+println quote;
+quote = ' Hello ! how are you? \' i am fine what about you';
+println quote;
+
+quote = " Hello ! how are you? \t \t i am fine what \n about you";
+println quote;
+
+def priceInEuro = "Price in Euro \u20AC";
+println priceInEuro
+
+special characters you can escape:
+...................................
+
+\b - backspace
+\f - formfeed
+\t  -tab
+\s -single space
+\' - single quote within single quoted.
+\" - double quote witthin another double quote
+\unicode - unicode escape
+//////////////////////////////////////////////////////////////////////////////////////////
+
+Slashy String:
+..............
+ Strings inside slash / strings /
+
+// Slashy Strings
+
+//syntax : 1 simple strings
+def myValue = / This is demo slashy /;
+println myValue
+//syntax : 2 with escaped with back slash
+def myquote =/How are you! \i am fine \;/;
+println myquote
+//syntax 3 : multi line with slashy strings
+def doc = / hello
+ how are you?
+ welcome
+ greetings   
+/;
+println doc;
+// syntax 4 : interpolation with slashy strings
+
+def name='Subramanian'
+def greeting= / Hello ${name} /;
+println greeting
+
+Applications of Slashy;
+
+-Text Processing:
+  In any language, text processing can be done using "Regular Expression" : Regex.
+
+String mydata = " hey \; \$ hello 0 1, how are y subramanian , 7m3 ";
+
+i want  to extract nos
+i want to extract special characters
+i want to only $
+
+Task: write a code-java to extract nos,spicial characters,$
+
+String Processing is most common task in programming.
+Unix os introduced text processing methods - Streams
+
+Unix text processing programs - utitility programs- dsl's
+
+grep input | x | y | result -Unix dsl for text processing.
+
+Regular Expression:
+  Regular expression is dsl language to process strings / text
+  Regular expression works based on symbols called "Patterns"
+  Now a days every programming language supports Regular   Expression,language runtime and compiler provides regular   expression support.
+
+
+Regular expression in java:
+
+java.util.regex;
+
+Regular expression uses symbols
+ +
+ *
+ ~
+ {}
+ ?
+
+Simple Pattern syntax:
+......................
+
+ \d+ -match /find any number in the string - match any number one or more times
+
+Declare pattern in java
+  
+   String pattern =  "\d+"; -  this is compile time error because, special characters
+needed to be escaped.
+   
+   String pattern ="\\d+" -  now it is vaild , because we have escaped \+ chacter by \
+
+Drawback of this syntax:
+  Very complex , when we form complex regular expressions
+eg:
+ "\\+d\\+d\\*d ^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$
+
+
+package com.mycom;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class PatternMatching {
+    public static void main(String[] args) {
+        System.out.println("Regular Expression using Java");
+        String inputString ="hey  hello 0 1, how subramanian 1 , 7m3";
+        // \+d - pattern syntax in regular expression.
+        String pattern =  "\\d+";
+        System.out.println(pattern);
+        //Compile the Pattern
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher digitMatcher =compiledPattern.matcher(inputString);
+        System.out.println("Source String "+ inputString);
+        while(digitMatcher.find()) {
+            System.out.println(digitMatcher.group());
+        }
+
+    }
+}
+
+Groovy Simplifies the above pattern matching using "Slashy Strings"
+.....................................................................
+
+Version : 1 
+
+Just Replace patterns with slashy strings, continue others with java apis
+
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+println "Regular Expression-Groovy Implementation"
+//Step 1: declare input string
+def inputString = "hey  hello 0 1, how subramanian , 7m3";
+//Step 2: declare string inside slashy String
+String pattern = /\d+/;
+Pattern compiledPattern = Pattern.compile(pattern);
+Matcher digitMatcher = compiledPattern.matcher(inputString);
+println("Source String " + inputString);
+while (digitMatcher.find()) {
+    println(digitMatcher.group());
+}
+
+Version 2: Replace compile Code:
+.................................
+-Replace Pattern.compile api with ~/d+/
+  => "~" is operator - compile operator,later we will discuss this deeply.
+
+println "Regular Expression-Groovy Implementation"
+//Step 1: declare input string
+def inputString = "hey  hello 0 1, how subramanian , 7m3";
+Pattern compiledPattern = ~/\d+/;
+Matcher digitMatcher = compiledPattern.matcher(inputString);
+println("Source String " + inputString);
+while (digitMatcher.find()) {
+ println(digitMatcher.group());
+}
+
+//
+Version 3 :  slashy +pattern.compile + pattern.matcher
+........................................................
+ (inputString =~/\d+/)
+
+ "=~" - Compile + Match operator.
+
+println "Regular Expression-Groovy Implementation"
+//Step 1: declare input string
+def inputString = "hey  hello 0 1, how subramanian , 7m3";
+def compiledPattern = ~/\d+/;
+def matcher = (inputString =~ /\d+/)
+while (matcher.find()) {
+    println(matcher.group());
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+Coding Challange:
+.................
+Finding all dates in a String and getting
+//the date month and year can be as simple as below
+
+[dd-mm-yyy] - output format
+
+def dates = "28-02-1992 a b c  15-06-1982 15-Apr-1982";
+
+Expected output:
+
+28-02-1992, 15-06-1982
+/////////////////////////////////////////////////////////////////////////////////////////////
+dollar SlashyString:
+->Multi line + String interpolation
+
+  $// - multi line without interploation
+  $/""" xxx """/ multi line with interploation
+
+println "Dollar Slashy Strings";
+
+def name ="Subramanian"
+def dollarSlashy = $/ 
+   Hello,$name
+   100
+   prices
+   1
+   groovy
+   34
+/$
+println dollarSlashy
+def matcher = (dollarSlashy =~ /\d+/)
+while (matcher.find()) {
+    println(matcher.group());
+}
 
 
 

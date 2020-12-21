@@ -37,3 +37,10 @@ def ab = 100;
 def c =10.5;
 def myresult = ab * c; // integer * bigdecimal
 println myresult
+
+println "................"
+int c1 = 10;
+float c2 = 10.5;
+def y1 = c1 * c2;
+println y1;
+println (y1 instanceof Double) // Result cannot be found
