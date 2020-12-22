@@ -1317,6 +1317,642 @@ def matcher = (dollarSlashy =~ /\d+/)
 while (matcher.find()) {
     println(matcher.group());
 }
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Numbers:
+
+Primitives : 
+  byte,short,int,long
+  float,double
+  boolean
+  char
+Reference types
+  Integer - Wrapper classes
+  java.math.BigDecimal , java.math.BigInteger
+
+def a =100;
+a instanceof Integer
+
+How groovy identifies Integer
+  Integer.MAX_VALUE 
+
+How groovy identifies Long
+  Integer.MAX_VALUE + 1 - posstive
+  Integer.MAX_VALUE - 1 - negative values
+
+Numbers can be represented 
+ -binary
+    -prefx 0b
+
+println("Numbers")
+println "Binary Numbers"
+def a=0b10101111
+println a;
+
+ -octaal
+     -prefix 0
+println "Octal "
+def b = 077;
+println b;
+
+-hexadecimal
+   -prefix  0x
+
+println "Hexa decimals"
+def c = 0x77;
+println c;
+
+
+ -decimals
+
+println "Decimal literals"
+
+def d =10;
+BigDecimal bd =90.89;
+println("$d $bd")
+
+Underscore in literals
+......................
+  when writing long numbers , its harder to read, in order to group long numbers
+ "_" notation is used.
+
+eg: credit card numbers,sss,adharno,bigamount..
+
+
+println "Under scores"
+
+long creditCardNumber = 1234_5678_9012_3456L;
+println creditCardNumber
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Number suffixes:
+
+ float f =10.5f
+
+ f / F - float
+ d / D - double
+ l/L   - long
+ G/g   - BigInteger
+ G/g    -BigDecimal
+ i - Integer
+
+long l = 1233l;
+int  j = 89i;
+
+Math Operations: later we will see in operators sections
+...............................................................................................
+Booleans:
+
+In java booleans are represented by boolean type with value "true/false".
+
+Booleans In java:
+
+        boolean isActive = true;
+        boolean isEnabled = false;
+        //booleans inside if to check condition whether is true or not
+        if (isActive) {
+            System.out.println("Active");
+        } else {
+            System.out.println("InActive");
+        }
+        if (isEnabled) {
+            System.out.println("Enabled");
+        } else {
+            System.out.println("Disabled");
+        }
+        //Result of some relational and conditional operators
+        int a = 108;
+        if (a > 100) {
+            System.out.println("A is greater than 100");
+        } else {
+            System.out.println("A is not greater than 100");
+        }
+
+Groovy  and Booleans:
+.....................
+
+def start = 0;
+//int start =0;
+if (start) {
+    println("START");
+} else {
+    println("STOP");
+}
+
+def name = "Subramanian";
+if (name) {
+    println "NAME Found"
+} else {
+    println "NAME not Found";
+}
+
+Groovy truthy and falsy values:
+...............................
+In Groovy everthing is true execept the below values
+
+falsy values:
+
+1.boolean false
+2.0
+3."" (Empty string)
+4.null 
+5.Empty list => []
+6.Empty Map  => [:]
+
+/**
+ * Booleans in Groovy
+ */
+
+def isActive = true;
+def isEnabled = false;
+boolean status = true;
+def a = 10;
+
+if (isActive) {
+    println "Active"
+} else {
+    println "InActive"
+}
+if (isEnabled) {
+    println "Enabled"
+} else {
+    println "Disabled"
+}
+if (status) {
+    println "Ok"
+} else {
+    println "NotOk"
+}
+if (a > 100) {
+    println("A is greater than 100");
+} else {
+    println("A is not greater than 100");
+}
+/////////////////////////////////////////////////////////////////////////////
+def start = 0;
+//int start =0;
+if (start) {
+    println("START");
+} else {
+    println("STOP");
+}
+
+def city = "";
+if (city) {
+    println "CITY Found"
+} else {
+    println "CITY not Found";
+}
+def emp = null;
+if (emp) {
+    println "EMP Found"
+} else {
+    println "EMP not Found";
+}
+
+def name = "Subramanian";
+if (name) {
+    println "NAME Found"
+} else {
+    println "NAME not Found";
+}
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Collection Values : Data Structure
+  List
+  Set
+  Map
+
+List :
+ java.util.List
+ 
+how to declare list?
+println "...............List..................."
+
+def list = [1, 2, 3, 45, 66];
+println list;
+println list instanceof java.util.List
+println list instanceof java.util.ArrayList
+def names = ["Subramanian", "Geetha", "Ram", "Karthik"];
+println names
+def something = [1, "hello", 2, true];
+println something
+
+//declare linkedList
+def nodes = [1, 2, 34, 56] as LinkedList;
+println nodes instanceof java.util.LinkedList
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Array :
+  Array is fixed size , collection of items.
+
+String[] strs = ['Hello', 'Hai'];
+println strs
+//def [] ints = [1,23]
+def ints = [1, 23] as int[];
+println ints instanceof java.util.ArrayList
+println ints instanceof int[]
+
+//Arrays : java style declaration
+def mynumbers = new int[]{2, 45, 1, 2, 3};
+
+
+Booleans and List && Array
+...........................
+
+//empty list ; no values
+def emptyList = [];
+//truth and falsy values in List
+
+if (nodes) {
+    println "Nodes Present"
+} else {
+    println("Nodes not Present")
+}
+if (emptyList) {
+    println "Not Empty List"
+} else {
+    println("Empty  List")
+}
+
+
+def emptyArray = [] as int[];
+if (emptyArray) {
+    println "Not Empty Array"
+} else {
+    println("Empty  Array")
+}
+////////////////////////////////////////////////////////////////////////////////////////////
+Map : Key -Value Pair Data Structure:
+.....................................
+
+Java :
+HashMap map = new HashMap();
+map.put(1,"Subramaian");
+map.put(2,"Karthik");
+
+In Groovy:
+
+def map = [1:'subramanian',2:'Karthik']
+
+def map = [1: 'Subramanian', 2: 'Ram', 3: 'Karthik']
+println map;
+println map.get(1)
+println map instanceof java.util.Map;
+println map instanceof java.util.LinkedHashMap;
+
+//empty map declaration
+def emptyMap = [:];
+println(emptyMap)
+//Truthy and falsy values in Map
+if(map){
+    println "Map Present"
+}else{
+    println "Map not present"
+}
+
+if(emptyMap){
+    println "Map Present"
+}else{
+    println "Map not present"
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+                                              Operators
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Arithmetic operators:
+......................
++ - Addition
+- - Substraction
+* - multiplication
+/ - division
+% - remainder
+** - power operator - groovy operator
+
+
+Unary Operators:
+
+ ++
+ --
+++a
+a++
+a--
+--a
+
+println "Arthimetic operators"
+
+def a = 10
+def b = 20;
+
+println "Addition ${a + b}"
+println "Substraction ${a - b}"
+println "Multiplication ${a * b}"
+println "Division ${a / b}"
+println "Remainder ${a % b}"
+println "Power of  ${a**2}"
+println "Unary + ${a++}"
+println "Unary + ${++a}"
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Assignment operators
+.............................................................................................
+//single assignment
+def a = 10;
+def b = 20;
+println "$a $b";
+//multiple assigment : javastyle
+int s = 1, d = 80;
+def x = 1, y = 2;
+println "$x $y";
+//multiple assignment : groovy style
+def (x1, y1, de) = [10, 20, 9];
+println "$x1 $y1 $de";
+
+//mixed data type in one line
+def (status, today, counter) = [true, "02-02-19", 1];
+println "$status  $today  $counter"
+
+//extra values are left
+def (one, two) = [1, 2, 3, 4, 5];
+println "$one $two";
+//lesser values but extra variable and its value is null
+def (xy, xz, xa) = [1, 3];
+println "$xy $xz $xa";
+//def (name,age,city); //error
+def (name, age, city) = [];
+println "$name $age $city"
+
+Assignment and Artihmetic:
+...........................
+
+ def a =90;
+ def res = a + 1
+ def a+=3
+
++=
+-=
+*=
+/=
+%=
+**=
+//////////////////////////////////////////////////////////////////////////////////////////
+ 
+Relational Operators: The Result would be boolean
+/////////////////////
+
+== equal
+!= not equal - different
+< lessthan
+> greater than
+<= less than or equal
+>= greater than or equal
+
+def a = 10;
+def b = 10;
+println a == b;
+println a < b;
+println a <= b;
+println a > b;
+println a >= b;
+println a != b;
+////////////////////////////////////////////////////////////////////////////////////////
+
+Logical Operators: boolean result
+..................
+
+&&  - logical "and"
+||  - logical "or"
+!   - logical "not"
+
+These operators works based on truth table
+
+and
+0 0 - 0
+1 0  - 0
+0 1  -1
+1 1  -1
+
+def isActive = true;
+def isEnabled = true;
+println " && => " + isActive && isEnabled; //true
+println " || => " + isActive || isEnabled; //true
+println " !  => " + !isEnabled; //false
+
+def name = ""   //false
+def city = "Coimbatore";  //true
+println name && city; //?
+
+
+def start = 0; //0 false
+def stop = 10; //10 true
+println start || stop; // true
+
+def isEmpty;
+println isEmpty;
+println !isEmpty
+isEmpty = "hello"
+println !isEmpty
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Bitwise and bit shift operators:
+.................................
+
+Bitwise operators are used to maniuplate bits - based on 2's compliement theories.
+
+& - bit wise and
+| - bit wise or
+~  - bitwise negation
+
+bit shit operators
+
+<<  -left shift
+>> -right shift
+>>> - right shift unsigned.
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Conditional Operators:
+......................
+
+1.not operator - !
+2.Tenary operator - ?:
+3.Elvis Operator  - ?
+
+Elvis operator:
+..............
+The "Elvis operator" is a shortening of the ternary operator. One instance of where this is handy is for returning a 'sensible default' value if an expression resolves to false-ish
+
+def a=0
+
+ if a is true, print a's value , else assign our own default value.
+
+?: =>Elvis operator
+
+//Elvis operator is used to assign default values if a variable is false.
+
+def counter; //null
+//if counter is false,then initalize 1 else the value of the counter
+println counter ?: 1;
+
+
+//!
+def myvar = true;
+println !myvar;
+//?:
+//where ever if ..else lader you can replace with ?:
+def a = 10;
+def b = 20;
+if (a == b) {
+    println "Equal"
+} else {
+    println "Not equal"
+}
+a == b ? println("Equal") : println("Not Equal");
+def result = a == b ? "Equal" : "Not Equal";
+println result
+def name = "subramanian";
+def found = name ? "Name Found $name" : "Name not Found"
+println found;
+//////////////////////
+def price;
+//Using tenary
+println price ? price : 10;
+//Using elivs
+println price ?: 10
+
+def totalPrice = price?:10 * 100;
+println "Total Price $totalPrice"
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Regular Expression Operators:
+.............................
+
+Pattern Operator : ~
+~/pattern/ ->Pattern
+
+//~Pattern operator
+def pattern = ~/\d+/
+println pattern instanceof Pattern
+
+Find operator:=~
+
+Alternatively to building a pattern, you can directly use the find operator =~ to build a java.util.regex.Matcher instance
+
+=~ ->Returns Matcher Instance
+
+def text="mytext"
+//=~ Find operator which returns Matcher
+def matcher = (text =~/\d+/);
+println matcher instanceof Matcher; 
+
+
+Match operator:
+..............
+
+ ==~ Matcher Operator : returns boolean
+ !=~ Matcher Operator : returns boolean
+/////////////////////////////////////////////////////////////////////////////////////////////
+Advanced Operators:
+1.Spread Operator
+2.Range Operator
+3.Spaceship Operator
+4.Subscript Operator
+5.Identity Operator
+6.Coercion Operator
+7.Call Operator
+8.Method Reference/ Pointer Operator 
+9.Object Operators
+   Safe navigation operators
+   Direct field access operators
+   Method pointer operators
+   Method reference operators
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+                                          Conditional Strucutures
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+1. if/else
+  Groovy supports if/else from java 
+
+def isActive = true;
+
+if (isActive) {
+    println "Active"
+} else {
+    println "Not Active"
+}
+
+2.Switch...case
+ 
+ Groovy switch case can handle any type of switch value and different kinds of matching can be performed.
+
+def x = 1.23;
+def result = "";
+
+switch (x) {
+    case "foo":
+        result = "foo value"
+        break
+    case "bar":
+        result = "bar value"
+        break
+    case 122:
+        result = "some numbers"
+        break
+    case true:
+        result = "some boolean"
+        break
+    case Integer:
+        result = "Integer value"
+        break
+    case ~/fo*/:
+        result = "Regular expression value"
+        break
+    case Number:
+        result = "Number value"
+        break;
+        defalut:
+        result = "No match found"
+}
+println result;
+/////////////////////////////////////////////////////////////////////////////////////////////
+				Iterators - Loops
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Groovy supports java/c style loop
+
+for,while,do..while
+//classic for loop
+for (int i = 0; i < 10; i++) {
+    println i;
+}
+for (def i = 0; i < 10; i++) {
+    println i;
+}
+//classic while loop
+def x = 0
+def y = 5
+while (y-- > 0) {
+    x++
+    println "Y $y"
+}
+println x;
+//do ..while
+def counter = 5;
+def fact = 1;
+do {
+    fact *= counter--
+} while (counter > 1)
+println fact
+..............................................................................................
+
+Coding Challanges:
+..................
+
+
+
+
+
 
 
 
