@@ -1949,6 +1949,23 @@ println fact
 Coding Challanges:
 ..................
 
+Q:1.find even numbers from 0 to 1000 range.
+
+
+Q.2.find Grade for given score
+
+ score is greater than 95 - A
+
+ 80 tO 95 - Grade B
+
+ 60 to 80 -Grade C
+ 
+ 50 TO 60 - Grade D
+ 
+ less THAN 50 - F 
+
+ 
+
 
 
 
