@@ -1964,7 +1964,802 @@ Q.2.find Grade for given score
  
  less THAN 50 - F 
 
+ /////////////////////////////////////////////////////////////////////////////////////
+
+Groovy Script Programming:
+..........................
+
+-collection of variables and methods(functions).
+
+How scripts are working?
+
+ When we write script , groovy creates a class "ScriptClass" , will have main method and run method.
+ The name of the script file  will go as name of the script class name.
+
+eg:
+
+Written by you?
+
+ HelloWorld.groovy
+
+ println "Hello Script"
+
+Groovy will write like below
+
+class HelloWorld extends Script{
+
+    //method called run
+    def run(){
+      println "Hello Script"
+   }
+
  
+ static void main(String[]args){
+  
+      InvokerHelper.runScript(HelloWorld,args)
+ }
+
+}
+/////////////////////////////////////////////////////////////////////////////////////////
+
+methods:
+........
+
+-methods are going to group biz/application logic.
+
+
+Syntax:
+
+ 1.static typed syntax ; looks like a java syntax
+
+   returntype methodName(args){
+     //method body
+     return statement
+   }
+   void sayHello(){ 
+
+
+   }
+2. dynamic typed syntax
+
+    def methodName(args){
+      //method body
+    }
+
+MethodSimple.groovy
+
+//methods simple
+
+//static type
+//mehtod declaration
+void sayHello() {
+    println "Hello";
+}
+//calling method
+sayHello();
+
+script class and methods:
+.........................
+-all methods will go inside script class as instance methods of script class
+-methods invocation will go inside run method.
+
+class MethodSimple extends Script{
+
+      void sayHello() {
+           println "Hello";
+      }
+
+    //method called run
+     def run(){
+         sayHello();
+     }
+
+ 
+ static void main(String[]args){
+  
+      InvokerHelper.runScript(HelloWorld,args)
+ }
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+methods with return type and args:
+..................................
+
+//methods simple
+
+//static type
+//mehtod declaration
+void sayHello() {
+    println "Hello";
+}
+//calling method
+sayHello();
+
+String sayHai(String name) {
+    return "Hai $name"
+}
+
+println("${sayHai('Subramanian')}");
+
+def mymethod() {
+    println 'mymehtod';
+}
+
+mymethod();
+///////////////////////////////////////////////////////////////////////////////////////////
+Method flavours:Args:
+.....................
+
+args; receving
+parameters : passing
+
+
+-When compare to java, groovy allows to skip passing parameters. 
+if you skip the value, the variable will hold "null" value.
+
+
+def sayHello(String name) {
+    println("$name");
+}
+sayHello('Subramanian');  => Subramanian
+sayHello(); => null
+
+Default values:
+...............
+ if you dont supply parameter, the groovy initalize the default values.
+
+def sayHello(String name = 'defaultName') {
+    println("${name.toUpperCase()}");
+}
+
+sayHello('Subramanian');
+sayHello();
+
+def add(int a = 0, int b = 0) {
+    int result = a + b;
+    println "The Add Result is $result";
+}
+
+add(10, 10)
+add()
+
+def doStuff(def x, def y) {
+    int result = x + y;
+    println "The DoStuff Result is $result";
+}
+
+doStuff(10, 10);
+doStuff(78.9, 89.90)
+//doStuff(true,90.78) : this produces runtime error;
+//////////////////////////////////////////////////////////////////////////////////////////
+
+Var -Args : Variable Args:
+.........................
+ what if i want a method, that method must take n-number of args.
+ What if i pass more parameters, but i have less args.
+
+type ...args
+//doStuff(true,90.78) : this produces runtime error;
+def logger(String ... message) {
+    println message;
+}
+
+logger('hello'); //single parameter
+logger('hello','hai'); //2 parameter
+logger('hello','greetings','welcome'); //3 parameter
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Without type keywords or def keywords
+
+//def doSomething(def x){
+//    
+//}
+//def doSomething(String x){
+//
+//}
+def doSomething(x = 0) {
+    pritln x
+}
+
+doSomething(1000)
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Method Return values:
+....................
+
+type method(){}
+
+def method(){}
+
+String sayHello() {
+    return 'Hello';
+}
+
+String result = sayHello();
+println result;
+println sayHello();
+
+int add() {
+    return 10 + 10;
+    //  return "hello";
+}
+
+println add();
+
+def sayHai() {
+    return "Hello"
+    //return 100;
+}
+
+println sayHai();
+
+******************************************************************************************
+Note:
+In groovy , return statement is optional, not necessary, by default every method returns some
+value , whether the return statement is present or not.
+
+"Last line of method , will be return value";
+
+
+String sayHello() {
+    return 'Hello';
+}
+
+String result = sayHello();
+println result;
+println sayHello();
+
+int add() {
+    return 10 + 10;
+    //  return "hello";
+}
+
+println add();
+
+def sayHai() {
+    return "Hello"
+    //return 100;
+}
+
+println sayHai();
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+def getCount() {
+    200; // return 200
+}
+
+println getCount()
+
+def calculate() {
+    10 + 10;
+    20 + 20;
+    50 + 50;
+}
+
+println(calculate())
+
+def multiply(int a = 0, int b = 0) {
+    println "multiply";
+    def result = a * b;
+    result * 10;
+}
+
+println(multiply(23, 89))
+println(multiply()) // result
+
+double multiply_1(int a = 0, int b = 0) {
+    println "multiply";
+    def result = a * b;
+    result * 10;
+}
+
+println(multiply_1(23, 89))
+println(multiply_1()) // result
+
+void multiply_2(int a = 0, int b = 0) {
+    println "multiply";
+    def result = a * b;
+    result * 10;
+}
+
+println(multiply_2(23, 89))
+println(multiply_2()) // result // would be null
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+def login(String userName = "admin", String password = "admin") {
+    userName.equals("admin") && password.equals("admin");
+}
+
+def status;
+status = login('guest', 'guest') ? 'Login Success' : 'Login failed';
+println status
+status = login() ? 'Login Success' : 'Login failed';
+println status;
+///////////////////////////////**********///////////////////////////////////////////////////
+                    Object oriented Programming in Groovy
+////////////////////////////////////////////////////////////////////////////////////////////
+Object oriented Concepts:
+1.Abstraction
+2.Encapsulation
+3.Modularity
+4.Hierachy
+5.Typing
+6.Persistency
+7.Concurrency
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Abstraction:
+  High level representation of domains in software
+  In Programming languages abstraction is implemented via "classes , interfaces"...
+
+class:
+
+1. class is used to organize variables and methods under single unit.
+    variables represent data, methods represent how to operate on that data.
+2. class is template for a problem domain we call object.
+
+classes are in java language:
+
+1.class is used to represent object template.
+2.class contains variables and methods
+3.class can also contain another class,interfaces ; inner classes
+4.Every java program must start with class definition only.
+5.Every program can have mulitple java classes , but recommended is only one class per   file/program
+6.Every java program must have main method.
+
+Objects:
+
+1.Runtime representation of class we call "Object"
+2.Object means , memory representation of class.
+3.We can create more objects from a single class, but each object has its own memory address
+4.Object is pointed by a variable called "reference variable" ; pointer to object
+5.object contains methods, and variables called instance members.
+
+
+Steps:
+
+1.declare class
+
+package com.microgenesis.oo;
+
+public class HelloWorld {
+    public String sayHello(String name) {
+        return "Hello " + name;
+    }
+}
+
+2.Create Object - Allocate Memory for a class.
+
+ You can create object for any class any where in the application.
+
+here i will show you  , in main method.
+
+ HelloWorld hello      =          new         HelloWorld();
+   |         |         |           |             |
+ Type     Reference assigment  memory         constructor call - method call
+          Variable  operator   allocation
+                               operator
+
+
+package com.microgenesis.oo;
+
+public class HelloMain {
+    public static void main(String[] args) {
+        HelloWorld hello = new HelloWorld();
+        String result = hello.sayHello("Subramanian");
+        System.out.println(result);
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+class declaration types:
+
+1.The class contains apis  - Service classes.
+2.The class contains apis to interact with databases - Repository classes/DAO Classes
+3.The class contains web end points - Controllers
+4.The class contains only data - Entity classes/ Bean
+5.The class contains global data  -  class with static data.
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Step 1:
+Entity
+Product.java
+package com.microgenesis.oo;
+
+//Entity class ; Which reprents data pointer
+public class Product {
+    private int id;
+    private String productName;
+    private double price;
+    private int qty;
+    private boolean inStock;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
+    }
+
+
+}
+
+ProductRepository.java
+package com.microgenesis.oo;
+
+import java.util.Arrays;
+import java.util.List;
+
+public class ProductRepository {
+    public List<Product> findAll() {
+        Product product1 = new Product();
+        product1.setId(1);
+        product1.setProductName("Phone");
+        product1.setInStock(true);
+        product1.setPrice(23.89);
+        product1.setQty(100);
+
+        Product product2 = new Product();
+        product2.setId(2);
+        product2.setProductName("TV");
+        product2.setInStock(true);
+        product2.setPrice(29993.89);
+        product2.setQty(10000);
+
+        return Arrays.asList(product1, product2);
+    }
+}
+
+ProductService.java
+package com.microgenesis.oo;
+
+import java.util.List;
+
+public class ProductService {
+    //declare variable
+    private ProductRepository repository = new ProductRepository();
+
+    public List<Product> findAll() {
+        return repository.findAll();
+    }
+}
+
+Application.java
+package com.microgenesis.oo;
+
+import java.util.List;
+
+public class Application {
+    public static void main(String[] args) {
+        ProductService service = new ProductService();
+        List<Product> products = service.findAll();
+        for (Product product : products) {
+            System.out.println(product.getId() + " " + product.getProductName());
+        }
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Java Beans:
+...........
+
+-It is a standard  or spec for declaring a class and create object.
+
+Rules:
+
+1.class must be declared with public keyword
+ 
+  public class Customer{}
+
+2. class must have instance variables 
+
+   public class Customer {
+          int id;
+          String name; 
+   }
+3. instance variables must be marked with private keyword
+
+   public class Customer {
+          private int id;
+          private String name; 
+   }
+
+ - instance variables hold data of object like id,name.
+
+ How to initalize the data?
+
+ Ways:
+3.1.direct initalization
+  private int id =1;
+  private String name ="Subramanian"
+ which is not standard way.
+
+3.2.after object creation via reference variable
+public class Customer {
+    int id;
+    String name;
+}
+
+Customer customer = new Customer();
+        customer.id =1;
+        customer.name ="Subramanian";
+        System.out.println(customer.id + " " + customer.name);
+
+ it is valid but not recommended as per java bean standards.
+
+4.we must introduce methods to initalize and read instance variables
+  -methods : accessors and mutatators ; setters and getters.
+
+set methods - to initalize the data
+get methods - to read data.
+
+set method rules:
+
+  public void setVariableName(datatype variableName){
+
+     this.variableName =variableName
+  }
+  public void setId(int id) {
+        this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+getter:
+ 
+  public returnType getVariable(){
+      return variable;
+  }
+package com.microgenesis.oo;
+
+public class Customer {
+    private int id;
+    private String name;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+4.1.data can initalized without setter methods
+
+ via constructors
+
+constructors:
+  
+-It is special method
+-to initlize instance variables during object creation.
+
+constructors offer various ways to initalize object.
+
+package com.microgenesis.oo;
+
+public class Customer {
+    private int id;
+    private String name;
+
+    //default constructor
+    public Customer() {
+
+    }
+
+    //args constructors;
+    //only id
+    public Customer(int id) {
+        this.id = id;
+    }
+
+    public Customer(String name) {
+        this.name = name;
+    }
+
+    public Customer(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+package com.microgenesis.oo;
+
+public class JavaBeanSpec {
+    public static void main(String[] args) {
+        Customer customer = new Customer();
+
+//        customer.id =1;
+//        customer.name ="Subramanian";
+//        System.out.println(customer.id + " " + customer.name);
+        customer.setId(12);
+        customer.setName("Subramanian");
+        System.out.println(customer.getId() + " " + customer.getName());
+
+        //args constructors
+        //single id
+        Customer customer1 = new Customer(125);
+        customer1.setName("foo");
+        System.out.println(customer1.getId() + " " + customer1.getName());
+
+        Customer customer2 = new Customer("bar");
+        customer2.setId(1000);
+        System.out.println(customer2.getId() + " " + customer2.getName());
+
+        Customer customer3 = new Customer(7888,"barfoo");
+        System.out.println(customer3.getId() + " " + customer3.getName());
+
+
+
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////
+
+setters vs constructors:
+
+ Both recommened:
+
+1.Use setter once object is created. lazy initalization
+2.Use constructor during object creation; Eagar intialization
+/////////////////////////////////////////////////////////////////////////////////////
+
+Groovy and Object Oriented Programming:
+
+1.Groovy uses Groovy Standards
+   ->Groovy Bean standards
+
+
+1.declare class
+2.create object
+
+class:
+
+1.Groovy classes are very similar to Java classes, and are compatible with Java ones at JVM level.
+
+2.They may have methods, fields and properties (think JavaBean properties but with less boilerplate).
+
+3.Classes and class members can have the same modifiers (public, protected, private, static, etc) as in Java with some minor differences at the source level
+
+
+The key differences between Groovy classes and their Java counterparts are:
+
+1.Classes or methods with no visibility modifier are automatically public (a special annotation can be used to achieve package private visibility).
+
+2.Fields with no visibility modifier are turned into properties automatically, which results in less verbose code, since explicit getter and setter methods aren’t needed.
+
+3.Classes do not need to have the same base name as their source file definitions but it is highly recommended in most scenarios
+
+4.One source file may contain one or more classes (but if a file contains any code not in a class, it is considered a script). Scripts are just classes with some special conventions and will have the same name as their source file (so don’t include a class definition within a script having the same name as the script source file).
+
+
+Fields  Declaration Rules:
+
+1.fields must be declared without any explicit modifer
+2.fields must have strong typing not def keyword
+3.As soon as you declare fields based on the above rules
+  groovy will generate setter and getter methods.
+
+
+
+Lets code:
+
+1.create groovy class and create object.
+
+package com.microgenesis.groovy.beans
+
+class User {
+    //in groovy theses variables scope is public by default
+    int userId;
+    String userName;
+    String password;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
