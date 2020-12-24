@@ -2742,6 +2742,471 @@ println "User Info ${user.userId} ${user.userName} ${user.password}"
 //key:value ; key-instance variable; value ; variable value
 User user1 = new User(userId: 1, userName: 'root', password: 'super');
 println "User Info  ${user1.userId} ${user1.userName} ${user1.password}"
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Object Operators:
+................
+
+1.Direct field access operator:
+
+ It is used to access fields
+
+field:
+  - It is an instance variable declared inside class
+
+
+"." - field access operator.
+    internally triggers getter
+".@" - field access operator.
+    if you want to access without getter.
+
+
+
+class Person {
+    int id;
+}
+
+def person = new Person(id:100);
+println person.id;
+
+person.id ----calls person.getId() => which calls getter method
+
+println person.@id -Which access id property directly
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Default values for an Object:
+.............................
+
+if you declare any variable whether it is primitive or reference inside a class.
+  Those variables are called as "instance variables".
+
+if you declare any variable whether it is primitive or reference inside a class with static keyword.
+  Those variables are called as "class  variables". static String varName=value
+
+Any variable has default value:
+
+integer family
+  0
+floating family
+ 0.0
+boolean family
+ false
+Reference types - String,Employee....
+ null
+
+class Person {
+    int id;
+    String name;
+    boolean  isActive;
+    double pointers;
+
+}
+
+def person = new Person();
+println person.id;
+println person.@id
+println person.name
+println person.isActive
+println person.pointers
+
+output:
+
+0
+0
+null
+false
+0.0
+/////////////////////////////////////////////////////////////////////////////////////////////
+How to know the Runtime information obout a class?
+
+
+def person = new Person();
+println person.getClass();
+
+output:
+class com.microgenesis.groovy.beans.Person
+
+
+def person1= null;
+println person1.getClass();
+
+class org.codehaus.groovy.runtime.NullObject
+
+null:
+ means the reference variable is not pointing object of some type.
+
+NullPointerException:
+
+ It is runtime error, which is thrown when ever you access object fields and methods
+
+if object not assigned
+
+Person person1= null;
+println person1.getClass();
+println person1.name
+
+here person1 variable does hot have any object store, so that , person1.name will throw the following error.
+
+Caught: java.lang.NullPointerException: Cannot get property 'name' on null object
+java.lang.NullPointerException: Cannot get property 'name' on null object
+	at ObjectOperators.run(ObjectOperators.groovy:13)
+
+How to safely avoid NullpointerException?
+
+Groovy provides an operator called 
+
+ "safe navigation operator":
+      ?.
+
+eg:
+  person1?.name
+
+//Person person1=new Person(name:'Subramanian');
+Person person1 = null;
+println person1.getClass();
+//println person1.name
+println person1?.name
+
+if (person1?.name) {
+    println("Name found")
+} else {
+    println "Name not found!"
+}
+def res = person1?.name ? "Name Found" : "Name Not found!"
+println res;
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Method Pointer Operator:
+.........................
+The method pointer operator (.&) can be used to store a reference to a method in a variable.
+in order to call it later.
+
+
+class Person {
+    int id;
+    String name;
+    boolean isActive;
+    double pointers;
+
+    def save() {
+        "Save method is called"
+    }
+
+}
+
+//Method pointer Operator
+Person person2 = new Person();
+println person2.save() //direct call
+//store method pointer into a variable
+def saveDummy = person2.&save
+println saveDummy(); 
+//////////////////////////////////////////////////////////////////////////////////////////
+
+Method Reference Operator:
+..........................
+
+The Latest groovy (groovy version 3) supports java 8 method reference syntax.
+
+The operator is "::" - method reference operator.
+
+class Task {
+    private void startMicroTask() {
+        println(Thread.currentThread().getName());
+    }
+    public void startTask() {
+        Thread thread = null;
+        thread = new Thread(new Runnable() {
+            @Override
+            void run() {
+                //thread logic
+                println Thread.currentThread().getName();
+            }
+        });
+        thread.start();
+        //method reference operator to eleminate the above code.
+        thread = new Thread(this::startMicroTask)
+        thread.start();
+
+    }
+
+}
+Task task = new Task();
+task.startTask();
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Spread Operator:
+................
+Lets say you have list of Cars(object), you want to access a particular field.
+
+*. -  Spread Operator
+ 
+
+Car.groovy
+
+class Car {
+    String make;
+    String model;
+}
+
+
+def cars = [
+        new Car(make: 'Renault', model: '2020'),
+        new Car(make: 'Maruthi', model: 'Alto')
+]
+def makes = cars*.make;
+println makes
+//////////////////////////////////////////////////////////////////////////////////////////
+
+Object DeStructuring:
+ 
+ Extracting object properties.
+
+Rules;
+-in order to implement object destructuring, getAt method must be given
+-returns variable type /def 
+-takes index as arg
+-write a logic to assign index  based properties
+
+
+class Coordinates {
+    double latitutde;
+    double longitude;
+    //object destrucing api
+    def getAt(int idx) {
+        if (idx == 0) latitutde
+        else if (idx == 1) longitude
+        else throw new Exception("Property not found")
+    }
+}
+def coordinates = new Coordinates(latitutde: 34.89, longitude: 1.2);
+//println("${coordinates.latitutde}  ${coordinates.longitude} ")
+def (lat, lng) = coordinates;
+println("${lat}  ${lng} ")
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Methods
+......
+-method defintions
+-method parameters
+  -named parameters
+  -positional parameters
+  -default ars
+  -var args
+
+package com.microgenesis.oo
+
+class MyMethods {
+    //instance methods
+    def someMethod() {
+        'My return value'
+    }
+
+    String someMethod2() {
+        'Method 2 return value'
+    }
+
+    def someParam(def param1) {
+        param1
+    }
+
+    def someStringParam(String param2) {
+        param2
+    }
+
+    def someParamNew(param3) {
+        param3
+    }
+    //positional parameters
+    def add(int a = 1, String foo = "hello") {
+        println "$a $foo";
+    }
+
+    //Named Parameters + Positional Parameter
+    def bar(Map args, Integer bar = 0) {
+        println "${args.name}  ${args.city} ${bar}"
+    }
+
+}
+
+def mymethods = new MyMethods();
+
+println mymethods.someParamNew('hello')
+//mymethods.add("hello",67)
+mymethods.add(67, "hello")
+mymethods.bar(name: 'subramaian', city: 'Coimbatore', 90)
+mymethods.bar(city: 'Chennai', name: 'Subramanian')
+mymethods.bar(23, city: 'Chennai', name: 'Subramanian')
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+                                     Encapsulation
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+What is encapuslation?
+
+ It is a feature of OO, talks about , how to prevent code sharing.
+
+What is code :
+  collection of classes
+  class is having fields and methods, constructors
+
+In large application , we create many classes, we need to set some of rules how to share code.
+
+How to restrict code access?
+
+ java/groovy provides keywords 
+   -private,default,public,protected
+
+private - means no body can access expect the current class
+ private is used for instance variables and instance methods.
+
+In groovy:
+ private variables are not recommended to be treated as object fields.
+
+if you declare private, groovy wont generate setter and getters.
+private variables are by default converted into public.
+private methods are by default converted into public.
+
+public:
+ it is default modifier , no need to tell 
+
+if you tell, no setters and getters will be generated, if dont want setter and getter 
+you use public keyword.
+
+default: no modifer is told
+
+     String city; - public 
+
+protected: used inside inheritance
+
+
+classes are by default public without public keyword
+
+User.groovy  - scope is public
+class User{}
+
+User.java
+class User {} - scope is default-package level
+.............................................................................................
+                                  Hierachy
+............................................................................................
+
+Talks about Relationship.
+
+ -Object Relationships
+
+-HAS-A 
+-IS-A - inheritance
+
+
+
+HAS-A
+
+Address.groovy
+package com.microgenesis.oo.hasa
+
+class Address {
+      String street;
+      String city;
+}
+
+Guest.groovy
+package com.microgenesis.oo.hasa
+
+class Guest {
+    int id;
+    String name;
+    //has-a relationship ; Customer has a address
+    Address address;
+}
+
+
+Dependance injection:
+
+Binding objects among them.
+
+we need to bind address with customer.
+
+How we can bind objects?
+
+-setter injection/binding
+-constructor injection/binding
+
+
+
+import com.microgenesis.oo.hasa.Address
+import com.microgenesis.oo.hasa.Guest
+
+//setters
+Address a = new Address();
+a.street = '10th street';
+a.city = 'Coimbatore';
+Guest guest = new Guest();
+guest.id = 1000;
+guest.name = "subramanian";
+//setter injection
+guest.address = a
+println "Guest Information"
+println "ID ${guest.id}"
+println "Name ${guest.name}"
+println "Address ${guest.address.city} ${guest.address.street}"
+
+//consturctors injection
+
+Guest guest1 = new Guest(id: 12, name: 'Subramanian',
+        address: new Address(city: 'Coimbatore', street: '10th Street'));
+println "Guest Information"
+println "ID ${guest1.id}"
+println "Name ${guest1.name}"
+println "Address ${guest1.address.city} ${guest1.address.street}"
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+IS-A : inheritance:
+
+Objective of inhiertance:
+
+-To share code across the common classes: to avoid duplicate code.
+
+Implementation:
+
+- classes
+   -regular/concrete classes
+   -Abstract classes
+- interfaces
+- trait -  only in groovy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

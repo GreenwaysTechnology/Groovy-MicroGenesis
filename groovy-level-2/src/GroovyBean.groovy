@@ -23,3 +23,5 @@ println "User Info ${user.userId} ${user.userName} ${user.password}"
 //key:value ; key-instance variable; value ; variable value
 User user1 = new User(userId: 1, userName: 'root', password: 'super');
 println "User Info  ${user1.userId} ${user1.userName} ${user1.password}"
+println user1
+
