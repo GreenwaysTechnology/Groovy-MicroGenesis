@@ -3176,22 +3176,1004 @@ Implementation:
 - trait -  only in groovy
 
 
+inheritance: code reuse
+.......................
+
+1.base class / super class/ parent class
+2.child class/sub class
+
+inheritance is class level, inheritance happens during compile time.
+
+java supports single inheritance
+java supports multi level inhertiance via interfaces.
+
+groovy supports both.
+
+Implementation:
+1.concrete class 
+
+extends - key word is used to connect classes.
+
+as soon as two classes are connected code can be shared- data,methods.
+
+
+Vehicle.groovy
+
+package com.microgenesis.oo.isa
+
+class Vehicle {
+    def startEngine() {
+        "Vehicle engin starts";
+    }
+}
+
+Car.groovy
+
+package com.microgenesis.oo.isa
+
+class Car extends Vehicle {
+}
+
+Bus.groovy
+
+package com.microgenesis.oo.isa
+
+class Bus extends Vehicle{
+}
+
+
+Inheritance.groovy
+import com.microgenesis.oo.isa.Car
+
+def car = new Car()
+println car.startEngine()
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Overriding:
+
+ The over ride the base class method in dervied class.
+
+When ever we call a method , the Runtime sees a dervied class only. if method found in the 
+dervied class, then that method will be called.
+
+
+Use case : source code
+
+Vehicle.groovy
+
+class Vehicle {
+    def startEngine() {
+        "Vehicle engine starts";
+    }
+}
+
+Car.groovy
+class Car extends Vehicle {
+}        
+                       |
+def car = new Car();
+car.startEngine() ------
+
+ here startEngine is not present in dervied class. but how it is called.
+
+
+In the source code , no method present,
+
+After compilation, the compiler will generate a code like below
+
+Vehicle.class
+
+class Vehicle {
+    def startEngine() {
+        "Vehicle engine starts";
+    }
+}
+
+Car.class
+class Car extends Vehicle {
+   def startEngine() {
+        super.startEngine()
+    }
+}   
+def car = new Car();
+car.startEngine()
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Pointers: reference variables ; pointer to object
+..............................
+
+HelloWorld hello = new HelloWord();
+
+hello - reference variable
+
+Types of reference variables:
+
+1.explicit reference variable;
+
+ -variables are defined by us.
+eg
+HelloWorld hello = new HelloWord();
+
+hello - Explicit reference variable
+
+2.Implicit reference variable
+ 
+ Variables are defined by jvm .
+
+"this":
+  -It is variableName
+  -It points the Object
+  -It points the Object itself
+  -this variable is created during object creation, points itself
+  -every object has hidden implicit this pointer.
+
+"super"
+   -It is variableName
+   -It POints the Object
+   -It points the Parent Object.
+   -super variable is created during object creation, points Parent always.
+  -every object has hidden implicit this pointer.
 
 
 
+package com.microgenesis.oo.isa
+
+class Account {
+
+    def deposit() {
+        1000.80;
+    }
+}
+	
+package com.microgenesis.oo.isa
+
+class SavingsAccount extends Account {
+    //overriding
+    def deposit() {
+        10800.6777 + super.deposit()
+    }
+}
+
+SavingsAccount savingsAccount = new SavingsAccount();
+println(savingsAccount.deposit())
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+                                                 Typing
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Typing talks about Object types.
+
+-Concrete Type 
+-Super type
 
 
+-Concrete Type 
+ 
+Type of the variable and value of the variable belongs to same datatype
+
+ Left == Right
+ SavingsACccount sb  =new SavingsAccount()
+ 
+class SavingsAccount{}
+
+SavingsAccount sb = new SavingsAccount()
+  |             |
+Type          reference variable
 
 
+Super Type /Program to super type.
+..................................
+
+-The type of reference variable can be super class.
+
+class Account {
+
+}
+class SavingsAccount extends Account {
+    
+}
+
+object creation syntax
+
+1.SavingsAccount sb = new SavingsAccount();
+
+//Program to super type.
+
+2.Account sb = new SavingsAccount();
+
+3.Object sb = new SavingsAccount();
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Polymorphsim:
+.............
+ Variable(reference) binding with value
+
+ int a =10 ===> binding ; the variable binds a value of int type
+ 
+ Dog dog = new Dog() ==> binding; the variable binds a value(Object) of Dog type.
+ dog.eat() ===> value binding; method binding
+
+During compile time, the type of variable and binding evaulated, where as runtime, the value
+is assigned.
+
+1.Variable with type binding happens during compile time.
+
+  Animal a =new Dog();
+  a.eat();
+
+  During compile time, "The compiler looks always left side"
+
+2.Value binding with variable happens during runtime.
+
+  Animal a =new Dog();
+  a.eat();
+   
+   During runtime, the Runtime(jvm) always looks right right
+
+What if child class has extra method , Using parent type, how to compile?
+
+    Animal animal = new Dog();
+    animal.bark(); //compile time error
+
+How to fix compile runtime?
+
+Type casting:
+
+    int a =1000;
+    byte b = (byte)a;
+    
+int is big
+byte is smaller
+we have casted big to small.
+
+Similarly in reference types
+
+ParentType is big
+Child type is small.
+
+        Animal animal = new Dog();
+        animal.eat();
+        Dog mydog = (Dog) animal;
+        mydog.bark();
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Every java class /Groovy class has by default has parent class "java.lang.Object" / "groovy.lang.Object"
 
 
+Greeter.java
+public class Greeter{
+
+}
+|
+after compilation
+
+Greeter.class
+public class Greeter extends java.lang.Object{
+
+}
+
+Animal.java
+public class Animal{
+
+}
+Dog.java
+public class Dog extends Animal{
+
+}
+
+|
+after compilation
+Animal.class
+public class Animal extends java.lang.Object{
+
+}
+Dog.class
+public class Dog extends Animal{
+
+}
+
+"The type of variable can be Object"
+      ///Object
+        Object animalObj = new Dog();
+        Dog mydogObj = (Dog) animalObj;
+        mydogObj.bark();
+        mydogObj.eat();
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Groovy and Program to Super Type: How groovy achives dynamic typing
+...................................................................
+
+def i = 100;
+
+Ways:
+
+ Integer i = new Integer(100); 
+
+ Number i =new Integer(100)
+ 
+ Object i = new Integer(100)
 
 
+eg
 
+ Integer i = new Integer(100);
+        System.out.println(i.intValue());
 
+        Number i1 = new Integer(100);
+        System.out.println(i1.intValue());
 
+Object
 
+        Object i2 = null;
+        i2 = new Integer(100);
+        Integer myInteger = (Integer) i2;
+        System.out.println(myInteger.intValue());
+        i2 = new String("Hello");
+        System.out.println(i2.toString());
+/////////////////////////////////////////////////////////////////////////////////////////////
   
+         Groovy uses the type "Object" as type for all varibale declaration
+
+def i = 100; ====>def is replaced by "Object"
+
+println i + " " + i.getClass();
+i = "Hello";
+println i + " " + i.getClass();
+
+groovy takes cares of Casting for us.
+ Object a;
+def a =10 // a= new Integer
+a=90.89   // a  = new BigDecimal
+a="Test"  // a =new String()
+a=new Customer = a = new Customer()
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+interface,trait,abstract methods,abstract class
+
+
+interface based inheritance:
+............................
+
+What is interface?
+ 
+ interface is similar to class .
+
+Why interface for inheritance instead of class?
+
+Inheritance is creating family of classes.
+
+if you sharing data with in family : classes are suitable
+
+if you are sharing data across the family : interfaces are suitable.
+
+
+Family of classes:
+..................
+
+Group classes based on domain.
+
+Account,Customer,Employee
+
+
+Account Related classes
+ SavingsAccount,LoanAccount,CurrentAccount
+
+Customer related
+Corporate,Individual,OtherBanks
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Interfaces:
+
+ -interfaces are classes;
+ -interfaces can have abstract methods.
+
+abstract method:
+ no implementation is provided. implementation provided by implementators who inherits the interfaces.
+
+- interface can inherit other interfaces
+
+- a class should implement interface
+- a class can implement multiple interfaces.
+- Interface can act as super type.
+
+
+interface is keyword
+implments is keyword
+
+
+Flyable.groovy
+
+package com.microgenesis.oo.isa.inter
+
+interface Flyable {
+    //abstract methods
+    //public void abstract fly();
+    def fly(); //abstract method
+}
+
+AirPlane.groovy
+package com.microgenesis.oo.isa.inter
+
+class AirPlane implements Flyable {
+    @Override
+    def fly() {
+        'AirPlane flies'
+    }
+}
+
+Bird.groovy
+package com.microgenesis.oo.isa.inter
+
+class Bird implements Flyable {
+    @Override
+    def fly() {
+        'Bird flies'
+    }
+    def eat(){
+        'Bird can eat'
+    }
+}
+
+
+SpiderMan.groovy
+package com.microgenesis.oo.isa.inter
+
+class SpiderMan implements Flyable {
+    @Override
+    def fly() {
+        'SpiderMan flies'
+    }
+}
+
+interfacedemo.groovy
+import com.microgenesis.oo.isa.inter.AirPlane
+import com.microgenesis.oo.isa.inter.Bird
+import com.microgenesis.oo.isa.inter.SpiderMan
+
+//Flyable flyable = null;
+//Object flyable=null;
+def flyable = null;
+flyable = new Bird();
+println(flyable.fly())
+println(flyable.eat())
+flyable = new AirPlane();
+println(flyable.fly())
+
+flyable = new SpiderMan();
+println(flyable.fly())
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Multiple inheritance:
+
+package com.microgenesis.oo.isa.inter
+
+interface Init {
+  def init();
+}
+
+package com.microgenesis.oo.isa.inter
+
+interface Destroy {
+    def destroy();
+}
+package com.microgenesis.oo.isa.inter
+
+class Computer implements Init, Destroy {
+    @Override
+    def init() {
+        'Init'
+    }
+
+    @Override
+    def destroy() {
+        'Destory'
+    }
+}
+
+import com.microgenesis.oo.isa.inter.Computer
+
+def computer = new Computer();
+println computer.init()
+println computer.destroy()
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Interface and multiple inheritance
+
+-An interface can extends other interfaces,not implement.
+
+
+package com.microgenesis.oo.isa.inter
+
+interface Start {
+  def start();
+}
+
+package com.microgenesis.oo.isa.inter
+
+interface Init extends Start {
+  def init();
+}
+
+package com.microgenesis.oo.isa.inter
+
+class Computer implements Init, Destroy {
+    @Override
+    def init() {
+        'Init'
+    }
+
+    @Override
+    def start() {
+        'start'
+    }
+
+    @Override
+    def destroy() {
+        'Destory'
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+                                    Traits
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+What is trait?
+ Trait is similar as interface but very advanced interfaces.
+
+drawbacks of interfcases
+
+1.interfaces cant have implementation; but this feature added in java 8.
+
+
+Traits are a structural construct of the language which allows
+
+ -composition of behaviours
+ -runtime implementation of interfaces
+ -overriding
+ -supports static typing/compilation
+
+Trait declaration:
+
+Flyable.groovy
+package com.microgenesis.oo.isa.traits
+
+trait Flyable {
+    //method implemenation
+    String fly() {
+        'I am flying'
+    }
+}
+package com.microgenesis.oo.isa.traits
+
+class Bird implements  Flyable{
+}
+//basic trait: default implementation
+def bird = null;
+bird = new Bird();
+println(bird.fly())
+//////////////////////////////////////////////////////////////////////////////////////////
+
+Trait Methods:
+.............
+-can have public methods - normal methods
+-can have abstract methods
+-private methods
+
+package com.microgenesis.oo.isa.traits
+
+trait Greetable {
+    abstract String name();
+    String greeting() {
+        "Hello ${name()}"
+    }
+}
+class Person implements Greetable {
+    @Override
+    String name() {
+        'Subramanian'
+    }
+}
+def greetings= new Person();
+println(greetings.greeting())
+
+
+private methods are allowed inside trait:
+..........................................
+
+trait Greetable {
+    abstract String name();
+
+    private String getMessage() {
+        'Hello'
+    }
+
+    String greeting() {
+        "${getMessage()} ${name()} "
+    }
+}
+
+class Person implements Greetable {
+    @Override
+    String name() {
+        'Subramanian'
+    }
+}
+def greetings= new Person();
+println(greetings.greeting())
+/////////////////////////////////////////////////////////////////////////////////////////
+
+Traits and interfaces mixing:
+............................
+
+package com.microgenesis.oo.isa.traits
+
+interface Named {
+   String name();
+}
+
+
+package com.microgenesis.oo.isa.traits
+
+trait Greetable implements Named {
+    //abstract String name();
+    private String getMessage() {
+        'Hello'
+    }
+    @Override
+    String name() {
+        'Subramanian'
+    }
+    String greeting() {
+        "${getMessage()} ${name()} "
+    }
+}
+
+package com.microgenesis.oo.isa.traits
+
+class Person implements Greetable {
+//    @Override
+//    String name() {
+//        'Subramanian'
+//    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Properties ,Fields and Traits
+ Traits properties -instance variables like classes : public variables
+ Traits fields  -  intance variabels like classes ; private variables
+ 	
+
+package com.microgenesis.oo.isa.traits
+
+trait Age {
+   int age; //properties
+}
+
+class Person implements Greetable ,Age  {
+
+}
+
+def greetings= new Person(age:18);
+println(greetings.greeting() + " " + greetings.age)
+
+package com.microgenesis.oo.isa.traits
+
+trait Age {
+    private int counter = 0;
+    int age; //properties
+    int getCounter() {
+        counter += 1;
+        counter;
+    }
+
+}
+
+def greetings= new Person(age:18);
+println(greetings.greeting() + " " + greetings.age)
+println(greetings.getCounter())
+println(greetings.getCounter())
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+An trait can extend other traits:
+.................................
+
+package com.microgenesis.oo.isa.traits.more
+
+trait Named {
+  String name;
+}
+package com.microgenesis.oo.isa.traits.more
+
+trait Greet extends Named {
+    def sayHello() {
+        "Hello ${name}"
+    }
+}
+
+package com.microgenesis.oo.isa.traits.more
+
+class Person implements  Greet{
+}
+
+import com.microgenesis.oo.isa.traits.more.Person
+
+def person = new Person(name:'Subramanian');
+println(person.sayHello())
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Diamond Problem,Multiple Inheritance conflicts:
+
+
+
+package com.microgenesis.oo.isa.traits.more
+
+trait A {
+  String exec(){
+      'A'
+  }
+}
+package com.microgenesis.oo.isa.traits.more
+
+trait B {
+    String exec(){
+        'B'
+    }
+}
+package com.microgenesis.oo.isa.traits.more
+
+class C implements A, B {
+}
+
+def result = new C();
+println(result.exec())
+
+The result here is "B".
+
+How?
+  The default behaviour is that the method from the last declared trait in the implement clause wins
+
+if you want to change this without changing the order of implementation
+
+class C implements A,B {
+    @Override
+    String exec() {
+        A.super.exec()
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Trait Attachmement with a Class without using implements keyword: Runtime implemenation of traits:
+..........................................................................................
+
+package com.microgenesis.oo.isa.traits.more
+
+trait Advanced {
+    String doStuff() {
+        'I am Dynamic'
+    }
+}
+
+
+package com.microgenesis.oo.isa.traits.more
+
+class Machine {
+}
+
+def machine =new Machine() as Advanced;
+println machine.doStuff()
+//////////////////////////////////////////////////////////////////////////////////////////
+
+What if more traits if you want to attach:
+....................................
+
+package com.microgenesis.oo.isa.traits.more
+
+trait StartMachine {
+  String startMachine(){
+      'Start machine'
+  }
+}
+
+package com.microgenesis.oo.isa.traits.more
+
+trait Advanced {
+    String doStuff() {
+        'I am Dynamic'
+    }
+}
+ 
+
+def mymachine = new Machine();
+def newMachine = mymachine.withTraits Advanced, StartMachine
+println(newMachine.doStuff())
+println(newMachine.startMachine())
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Abstract classes:
+.................
+
+-concret classes are used to group common behaviours with implemenation
+-interfaces are used to group common behaviours for different classes with abstract methods
+-traits are used to group common behaviours for different classes with all features.
+
+Abstract classes:
+ -common behaviour for group of classes with concrete and abstract methods.
+
+
+package com.microgenesis.oo.abs
+
+abstract class Bird {
+    abstract def eat();
+    //non abstract methods
+    def saveBirds() {
+        'Save Birds from Global Warming!!!'
+    }
+}
+
+package com.microgenesis.oo.abs
+
+class Dove extends Bird {
+    @Override
+    def eat() {
+        'Dove eats Nuts'
+    }
+}
+package com.microgenesis.oo.abs
+
+class Crow extends Bird {
+    @Override
+    def eat() {
+        'Crow eats all'
+    }
+}
+import com.microgenesis.oo.abs.Crow
+import com.microgenesis.oo.abs.Dove
+
+def bird = null;
+bird = new Dove();
+println(bird.eat())
+println(bird.saveBirds())
+bird = new Crow();
+println(bird.eat())
+println(bird.saveBirds())
+////////////////////////////////////////////////////////////////////////////////////////////
+
+How to share data across the application?
+
+ static variables and methods
+
+-static variables are not instance specific, can be shared across multiple instances
+
+
+
+instance variables and methods
+   variables and mehtod are declared inside class , can be accessed by that object only.
+
+static variables and methods
+  variables and mehtod are declared inside class with static keyword , can be accessed by  any object in the application.
+
+
+static variables:
+
+1.declare static variable inside class with any data type.
+2.variables are declared in capital letters.
+3.static keyword must be used infront of type
+4.public scope must be used 
+5.static variables must be initalized
+6.No setters and getters.
+
+7.How to access static variables?
+
+  Dont create Object
+
+ Access via
+  ClassName.variable
+
+8.static variables should not be re initalized other parts of the program.
+  
+add one more keyword - final : constant.
+
+
+package com.microgenesis.oo.staticinfo
+
+class Message {
+    static  String INFO_MESSAGE="info";
+    static final String WARN_MESSAGE ="Warn";
+    static final String ERROR_MESSAGE = "Error";
+    static final String SUCCESS_MESSAGE ="Success";
+}
+
+
+Message.INFO_MESSAGE = 'Information'
+//Message.WARN_MESSAGE ='Warning'
+println(Message.INFO_MESSAGE)
+println(Message.WARN_MESSAGE)
+println(Message.ERROR_MESSAGE)
+println(Message.SUCCESS_MESSAGE)
+
+static methods: 
+ are used to call methods without creating object, usefull for making utilities
+
+package com.microgenesis.oo.staticinfo
+
+class Logger {
+    static void warn(String message) {
+        println(message);
+    }
+
+    static void error(String message) {
+        println(message);
+    }
+
+    static void success(String message) {
+        println(message);
+    }
+
+    static void info(String message) {
+        println(message);
+    }
+}
+
+
+com.microgenesis.oo.staticinfo.Logger.warn('Warning')
+println Math.random()
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+Advanced Groovy:
+
+1.Functional Programming
+  Closure
+2.Meta Programming
+   
+3.DSL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
