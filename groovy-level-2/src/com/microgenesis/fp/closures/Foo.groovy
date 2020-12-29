@@ -6,6 +6,5 @@ class Foo {
         println "this : " + this;
         println "owner : " + owner;
         println "Delegate :" + delegate
-
     }
 }
