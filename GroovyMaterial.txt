@@ -4134,6 +4134,1484 @@ Advanced Groovy:
    
 3.DSL
 
+////////////////////////////////////////////////////////////////////////////////////////
+
+Functional programming:
+.......................
+
+Groovy is dynamic,object oriented , functional style programming languages.
+
+
+functional programming:
+
+functional programming invented by Alonzo Church
+
+In 1930 two computation models were proposed.
+
+
+State Machine/Turing Machine:
+  Turing machine is  also formal system in mathematical logic for expressing computation based on variable abstraction.
+
+Lambda calculus:
+   Lambda calculus (also written as λ-calculus) is a formal system in mathematical logic for expressing computation based on function abstraction and application using variable binding and substitution.
+
+      The functional programming is the reference implementation of lambda calculs.
+
+LISP is the first Programming language implemented "functional programming" / "Lambda Calculs".
+
+*********************************************************************************************
+Functional programming is application of lambda calculs mathetical theroy.
+
+
+Functional Programming principles:lambda calculs mathetical
+
+1.side effects
+2.Pure functions
+3.immutablity : referential transparency.
+4.function is the first class cizitens
+5.no loops, but recurrsion.
+6.Higher order function
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+if any language supports 100% functional programming principles those lanaguages are called as 
+"Pure functional Programming". some lanaguages implements parital principles those languages are called "functional style programming language".
+
+Eg:
+ java 8 is functional style language
+ groovy is functional style language
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+              Functional Programming concepts and implementation in Groovy
+				(Closures)
+.............................................................................................
+
+What is Closure?
+
+ The closure is object, used to implement functional programming in groovy.
+
+ The closure is an open , anonymous(nameless),block of code that can take arg,return a value
+and be assigned to a variable, can be passed as a parameter to another clousre or method.
+
+ closure is method /function.
+
+ "closure is free code"
+
+ "Closure is a literal" - value like 10 ,"hello" ,true, 
+
+Since closure is a literal, can be assigned to a variable,that variable cab be used to invoke
+that closure(method/function)
+
+eg:
+   int a=10;
+
+Basic closure syntax:
+.....................
+
+ def func = { code }
+
+ func() // function invocation
+
+//How to declare clourse
+
+def func = {
+    //closure body :block of code
+    println "Hello Closure!!"
+    println "Hello Closure!!"
+    println "Hello Closure!!"
+    println "Hello Closure!!"
+
+}
+func();
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Args and Parameters in Closures:
+................................
+
+- Similar to methods, closures can take any type of args , including closure.
+- Type of args can be dynamic,static.
+- It can take default values
+
+Syntax
+
+ def func = { [arg1,arg2 ->]
+   function body
+ };
+//multiple args
+
+def add = null;
+add = { int a, int b ->
+    int result = a + b;
+    println "The Addition Result is ${result}";
+};
+add(10, 10)
+//with default value
+add = { int a = 0, int b = 0 ->
+    int result = a + b;
+    println "The Addition Result is ${result}";
+};
+add()
+//with def and value
+add = { def a = 0, def b = 0 ->
+    int result = a + b;
+    println "The Addition Result is ${result}";
+};
+add()
+//with out any type or def
+add = { a = 0, b = 0 ->
+    int result = a + b;
+    println "The Addition Result is ${result}";
+};
+add()
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Single Args and Parameter
+.........................
+def sayHello = null;
+
+sayHello = { name -> println("Hello $name") }
+sayHello('Subramanian')
+
+implicit "single parameter called  it"
+
+"it" - it is keyword used to replace explicit single parameter.
+
+
+def sayHello = null;
+
+sayHello = { name -> println("Hello $name") }
+sayHello('Subramanian')
+
+sayHello = {println("Hello $it") }
+sayHello('Subramanian')
+////////////////////////////////////////////////////////////////////////////////////////////
+
+How to return value from Closure?
+
+//Closure Return Value
+def add = null;
+add = { a = 1, b = 2 ->
+    def result = a + b;
+    return result;
+}
+println "${add(3, 5)}"
+
+add = { a = 1, b = 2 ->
+    def result = a + b;
+    result;
+}
+println "Without Return statement ${add(3, 5)}"
+add = { a = 1, b = 2 ->
+    def result = a + b;
+}
+println "Without Return statement ${add(3, 5)}"
+
+add = { a = 1, b = 2 ->
+    result = a + b;
+}
+println "Without Return statement ${add(3, 5)}"
+
+add = { a = 1, b = 2 ->
+    a + b;
+}
+println "Without Return statement ${add(3, 5)}"
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+def sayHello = null;
+
+sayHello = { name -> name };
+println sayHello('Subramanian')
+
+//using it
+sayHello = { it };
+println sayHello('Subramanian')
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Closure is an Object:
+......................
+
+//Strong clsoure
+Closure myclosure = { arg -> println("$arg") }
+println myclosure.getClass()
+def mynewClosure = { arg -> println("$arg") }
+println(mynewClosure.getClass())
+
+//calling closure
+myclosure('Hai'); // myclosure.call()
+myclosure.call('Hello')
+mynewClosure.call('welcome')
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Function is first class citizen:
+................................
+
+-Since function(closure) is value(literal)
+ can be assigned to a variable
+ can be passed to another clsoure or function as parameter
+ can be returned from another closure or method.
+
+
+can be assigned to a variable:
+
+def sayHello = null;
+sayHello = { name -> name };
+
+How to pass closure to a method as a parameter?
+
+
+//method takes String parameter
+void sayGreet(String name) {
+    println("$name")
+}
+//hardcode value
+sayGreet('Subramanian')
+def firstName = 'Subramanian';
+sayGreet(firstName);
+//method can take closure as parameter.
+void connect(def callback) {
+    //invoke closure
+    callback();
+}
+//pass closure via variable
+def db = {
+    println "Database Connection";
+};
+connect(db)
+//pass closure directly
+connect({
+    println "NOSQL Connection"
+})
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//what if a closure takes args
+void startWebServer(def callback) {
+    callback('Running')
+}
+
+//def server = { status -> println "Server is $status" }
+def server = { println "Server is $it" }
+startWebServer(server)
+//startWebServer({ status -> println "Server is $status" })
+startWebServer({ println "Server is $it" })
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+//method takes String parameter
+void sayGreet(String name) {
+    println("$name")
+}
+//hardcode value
+sayGreet('Subramanian')
+def firstName = 'Subramanian';
+sayGreet(firstName);
+//method can take closure as parameter.
+void connect(def callback) {
+    //invoke closure
+    callback();
+}
+//pass closure via variable
+def db = {
+    println "Database Connection";
+};
+connect(db)
+//pass closure directly
+connect({
+    println "NOSQL Connection"
+})
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//what if a closure takes args
+void startWebServer(def callback) {
+    callback('Running')
+}
+
+//def server = { status -> println "Server is $status" }
+def server = { println "Server is $it" }
+startWebServer(server)
+//startWebServer({ status -> println "Server is $status" })
+startWebServer({ println "Server is $it" })
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//Passing multiple closures as parameter and invoke any of them
+
+void login(resolve, reject) {
+    //biz logic
+    String userName = 'admin'
+    String password = 'foo';
+    if (userName.equals('admin') && password.equals('admin')) {
+        resolve('Login Success')
+    } else {
+        reject('Login failed')
+    }
+
+}
+
+login({
+    println "$it"
+}, {
+    println "$it"
+})
+
+login { println "$it" } { println "$it" }
+///////////////////////////////////////////////////////////////////////////////////////////
+
+How to pass a closure as a parameter to another closure?
+
+
+println "Closure as parameter to another closure"
+def auth = { userName, password, resolve, reject ->
+
+    if (userName.equals('admin') && password.equals('admin')) {
+        resolve('Login Success')
+    } else {
+        reject('Login failed')
+    }
+};
+auth('admin', 'admin', { println "$it" } ,{ println "$it" });
+
+auth('admin', 'admin') { println "$it" } { println "$it" }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Nested Closure:
+
+ Closure inside another closure.
+
+inner closures cant be called outside , because the scope is limited to that outter scope only.
+outer closure variables can be accessed inside inner closures.
+
+def outerClosure = {
+    println("Outer closure")
+    def a = 10;
+    //you cant call this clousre outside
+    def innerClosure = {
+        println "Inner closure $a"
+        def innerMost = {
+            println "Inner most $a"
+        }
+        innerMost();
+    }
+    innerClosure()
+}
+outerClosure();
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+How to return a closure from another method or closure?
+def counter() {
+    int a = 0;
+    def innerClosure = {
+        ++a;
+    }
+    return innerClosure;
+}
+
+def res = counter();
+for (int i = 0; i < 10; i++)
+    println res.call()
+
+
+Without Return Statement:
+def counter() {
+    int a = 0;
+    def innerClosure = {
+        ++a;
+    }
+}
+def res = counter();
+for (int i = 0; i < 10; i++)
+    println res.call()
+
+Without Return Statement and without def keyword:
+
+def counter() {
+    int a = 0;
+    innerClosure = {
+        ++a;
+    }
+}
+
+with return statement , but without def and variable Name
+def counter() {
+    int a = 0;
+    return {
+        ++a;
+    }
+}
+
+def res = counter();
+for (int i = 0; i < 10; i++)
+    println res.call()
+///////////////////////////////////////////////////////////////////////////////////////////
+Returning closure from closure:
+def counter = {
+    int a = 0;
+    return {
+        ++a;
+    }
+}
+
+def res = counter();
+for (int i = 0; i < 10; i++)
+    println res.call()
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+Closures and Built apis :
+
+List api.
+
+//List and closures
+
+def list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+list.each { println "$it" }
+
+def iterator = { println "$it" };
+list.each(iterator)
+def doubleIt = { println "${it * 2}" };
+list.each (doubleIt)
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+Delegation:
+..........
+Dictionary meaning:
+ A person designated to act for  or represent another or others; deputy.
+
+Groovy and Delegate:
+....................
+
+Groovy language is dynamic language.
+
+As of now , we have discussed "dynamic nature of groovy with respect to type system".
+
+Groovy provides more dynamic programming features.
+
+-During runtime, we can do lot of things on object.
+   
+A.Dynamic binding of an closure to an Object.
+
+        "This is called delegation"
+
+Key concepts:
+.............
+
+1.this keyword:
+   this inside closure , corresponds to the enclosing class where  the closure is defined.
+
+Where we can define closure?
+
+-inside script
+-inside groovy class
+
+-inside script
+
+closurethis.groovy
+def mycls = {
+    println this;
+}
+mycls()
+
+output: The class Name
+closurethis@490caf5f
+
+
+-inside class:
+package com.microgenesis.fp.closures
+
+class Foo {
+    def myls = {
+        println this;
+    }
+}
+def myclass = new Foo();
+myclass.myls()
+
+
+2.owner
+   corresponds to the enclosing object where the closure is defined. 
+
+def mycls = {
+    println "this : " + this;
+    println "Owner :"  + owner
+}
+mycls()
+
+class Foo {
+    def myls = {
+        println "Foo "
+        println "this : " + this;
+        println "owner : " + owner;
+    }
+}
+
+def myclass = new Foo();
+myclass.myls()
+
+////////////////////////////////////////////////////////////////////////////////////////
+3.delegate:
+
+ The delegate of a closure can be accessed by the delegate property.
+ 
+Closure can be ownership can be changed object to object.
+
+package com.microgenesis.fp.closures
+
+class Foo {
+    def myls = {
+        println "Foo "
+        println "this : " + this;
+        println "owner : " + owner;
+        println "Delegate :" + delegate
+
+    }
+}
+import com.microgenesis.fp.closures.Foo
+
+def mycls = {
+    println "this : " + this;
+    println "Owner :" + owner
+    println "Delegate :" + delegate
+
+}
+mycls()
+
+def myclass = new Foo();
+myclass.myls()
+
+output:
+this : closurethis@24ba9639
+Owner :closurethis@24ba9639
+Delegate :closurethis@24ba9639
+Foo 
+this : com.microgenesis.fp.closures.Foo@19e4fcac
+owner : com.microgenesis.fp.closures.Foo@19e4fcac
+Delegate :com.microgenesis.fp.closures.Foo@19e4fcac
+
+By defalut, all these property values are bound to object/class where we have defined.
+
+We can change the values:
+
+
+lets say i have a closure, i want to bind that closure to different objects over period.
+
+
+eg:
+
+package com.microgenesis.fp.closures
+
+class Boss {
+    String name;
+}
+
+package com.microgenesis.fp.closures
+
+class Person {
+    String name;
+}
+
+
+
+package com.microgenesis.fp.closures
+
+class UtilClosure {
+    def lowerCasedName = {
+        println "this : ${this}"
+        println "Owner : ${owner}"
+        println "Delegate : ${delegate}"
+        println("${delegate.name.toLowerCase()}")
+    }
+}
+
+
+
+
+import com.microgenesis.fp.closures.Boss
+import com.microgenesis.fp.closures.Person
+import com.microgenesis.fp.closures.UtilClosure
+
+//define closure that return uppercase
+def upperCasedName = {
+    println "this : ${this}"
+    println "Owner : ${owner}"
+    println "Delegate : ${delegate}"
+    println("${delegate.name.toUpperCase()}")
+}
+
+def person = new Person(name: 'subramanian');
+def boss = new Boss(name: 'Dhivya sree')
+//upperCasedName()
+//bind this closure to Person Object
+upperCasedName.delegate = person;
+println ".............After changing Delegate........"
+upperCasedName()
+upperCasedName.delegate = boss;
+upperCasedName()
+/////////////////////////////////////////////////////////////////////////////
+//lower case
+def util = new UtilClosure();
+util.lowerCasedName.delegate = person
+util.lowerCasedName()
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Delegation Strategy:
+....................
+
+lookup mechnism:
+
+
+eg:
+
+def upperCasedName = {
+    println "this : ${this}"
+    println "Owner : ${owner}"
+    println "Delegate : ${delegate}"
+    println("${name.toUpperCase()}")
+}
+upperCasedName()
+
+
+this : ClosureDelegeStrategy@69f1a286
+Owner : ClosureDelegeStrategy@69f1a286
+Delegate : ClosureDelegeStrategy@69f1a286
+Caught: groovy.lang.MissingPropertyException: No such property: name for class: ClosureDelegeStrategy
+groovy.lang.MissingPropertyException: No such property: name for class: ClosureDelegeStrategy
+	at ClosureDelegeStrategy$_run_closure1.doCall(ClosureDelegeStrategy.groovy:6)
+	at ClosureDelegeStrategy$_run_closure1.doCall(ClosureDelegeStrategy.groovy)
+	at ClosureDelegeStrategy.run(ClosureDelegeStrategy.groovy:8)
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+How to change the lookup order?
+
+Groovy first sees the method of owner, if not present, it will look up  in the delegate object.
+
+Closure writer = {
+    println "Owner $owner"
+    println "this $this"
+    println "delegate ${delegate}"
+    println append(it);
+}
+//script append method: writer's owner method
+def append(String str) {
+    "Fake append"
+}
+
+StringBuffer sb = new StringBuffer();
+//writer.resolveStrategy = Closure.DELEGATE_FIRST
+//writer.resolveStrategy = Closure.OWNER_FIRST
+writer.delegate = sb;
+writer('Hello')
+writer('Hello')
+writer('Hello')
+
+
+Default is "Owner First"
+//////////////////////////////////////////////////////////////////////////////////////////
+Closure.OWNER_FIRST ->lookup owner first, if not lookup delegate, if not ,will throw error
+Closure.DELEGATE_FIRST -> lookup delegate first, if not owner , if not will thorw error.
+Closure.OWNER_ONLY - lookup only in owner, if not , will throw error
+Clousre.DELEGATE_ONLY - lookup only in delegate , if not will throw error.
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Functional Programming concepts:
+...............................
+->Curry function
+->Memoization - caching
+->composition
+->Trampoline
+////////////////////////////////////////////////////////////////////////////////////////
+
+Curry function:
+...............
+In Groovy, Curry function referes to the concept of partial application.
+
+Objective:
+It will let you set the value of one parameter of a clousre, it returns a new closure accepting one less argument.
+
+def multiply = { a, b -> a * b };
+def doubler = multiply.curry(10)
+println doubler(10)
+println doubler(40)
+
+def log = { String type, Date createdOn, String message ->
+    println "$type $createdOn $message";
+}
+log('Info', new Date(), 'The record is deleted')
+
+def typeLog = log.curry("Info");
+typeLog(new Date(), "The record is Inserted")
+typeLog(new Date(), "The record is updated")
+
+def dateLog = typeLog.curry(new Date());
+dateLog('The record search is done!!!')
+
+
+Types of Curry methods:
+
+1.rcurry 
+ pass parameters from left to right rather right to left
+
+def divide = { a, b -> a / b }
+def halver = divide.rcurry(2)
+println(halver(10))
+//N curry- index based curry
+
+def volume = { double l, double w, double h ->
+    l * w * h
+};
+def fixedwithVolume = volume.ncurry(1, 2d, 4d)
+println fixedwithVolume(2d)
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Composition:
+...........
+
+ Coimbining two or more clousres getting into an single closure.
+
+"Closure composiition corresponds to the concept of function composition".
+
+ func1 + func2 + func3 +funcN=>newFunc.
+
+function compostion is done via an operator "<<   and >>".
+
+
+def one = {
+    //value of it would be output of second composed function
+    it + 2
+}
+def two = {
+    it * 3 //12
+}
+def three1 = one(two(4))
+println three1// one(two(4))
+def three = one << two // composition one(two(4))
+println three(2)// one(two(4))
+
+//This reverse operation for above one
+def four = one >> two
+println four(2)
+
+///////////////////////////////////////////////////////////////////////////////////////////
+Memoization:
+............
+Creates a caching variant of the closure
+
+def fib
+fib = {
+    long n -> n < 2 ? n : fib(n - 1) + fib(n - 2)
+}.memoize()
+println(fib(25))
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+                                   Groovy Meta Programming
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+What is Meta Programming?
+
+ Meta Programming means changing the program behaviour during runtime and compile time.
+
+Types of meta Programming:
+
+1.Runtime meta programming
+2.Compile time meta programming
+
+
+1.Runtime meta Programming:
+  We can postphone to runtime to intercept,inject, and even syntesize methods and properties of a class and interfaces.
+
+Runtime meta programming can be implemented in many ways.
+
+In java , once object created y cant add,delete any properties and methods during runtime. but in groovy this possible.
+
+How to implement Meta programming?
+
+Service.groovy
+package com.microgenesis.groovy.metaprog.runtime
+
+class Service {
+}
+
+
+RunttimeMetaProgramming.groovy
+
+import com.microgenesis.groovy.metaprog.runtime.Service
+
+def service = new Service();
+service.name = 'subramanian'
+
+Caught: groovy.lang.MissingPropertyException: No such property: name for class: com.microgenesis.groovy.metaprog.runtime.Service
+groovy.lang.MissingPropertyException: No such property: name for class: com.microgenesis.groovy.metaprog.runtime.Service
+	at RuntimeMetaProgramming.run(RuntimeMetaProgramming.groovy:4)
+
+
+ groovy.lang.MissingPropertyException , this exception is thrown when a property does exit.
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Every Groovy class implements groovy.lang.GroovyObject interface.
+
+
+public interface GroovyObject{
+
+public MetaClass	getMetaClass()
+Returns the metaclass for a given class.
+public Object	getProperty(String propertyName)
+Retrieves a property value.
+public Object	invokeMethod(String name, Object args)
+Invokes the given method.
+public void	setMetaClass(MetaClass metaClass)
+Allows the MetaClass to be replaced with a derived implementation.
+public void	setProperty(String propertyName, Object newValue)
+Sets the given property to the new value.
+}
+
+Object types in Groovy:
+
+1.POJO :  Plain old Java Object- It is java Object.
+2.POGO  : Plain Old Groovy Object 
+
+
+You will get this exception, if method not present in the Object
+
+Caught: groovy.lang.MissingMethodException: No signature of method: com.microgenesis.groovy.metaprog.runtime.Service.sayHello() is applicable for argument types: () values: []
+groovy.lang.MissingMethodException: No signature of method: com.microgenesis.groovy.metaprog.runtime.Service.sayHello() is applicable for argument types: () values: []
+	at RuntimeMetaProgramming.run(RuntimeMetaProgramming.groovy:14)
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+package com.microgenesis.groovy.metaprog.runtime
+
+class Service {
+    //store all dynamic propertes and its values
+    protected Map dynamicProperties = [:];
+    //override set
+    public void setProperty(String propertyName, Object newValue) {
+        // println("$propertyName $newValue")
+        dynamicProperties[propertyName] = newValue
+    }
+
+    def getProperty(String propertyName) {
+       //  println("$propertyName")
+        dynamicProperties[propertyName]
+    }
+
+    def methodMissing(String methodName,args){
+        def prop = dynamicProperties[methodName]
+        if(prop instanceof Closure){
+            return prop(*args); // expand args[0],args[1],args[2]
+        }
+    }
+}
+
+import com.microgenesis.groovy.metaprog.runtime.Service
+
+def service = new Service();
+//setters
+service.name = 'subramanian'
+service.age = 18
+service.city = "Coimbatore"
+//adding methods via closure
+service.sayHello = {
+    println "Say Hello"
+}
+service.calculate = { a, b -> a + b }
+
+println service.name + " " + service.age + service.city;
+service.sayHello()
+println service.calculate(10,23)
+///////////////////////////////////////////////////////////////////////////////////////////
+
+What if i dont want to add all logics like above?
+
+Groovy offers a simple property "metaClass" through which you can add all properties and methods.
+
+package com.microgenesis.groovy.metaprog.runtime
+
+class UtilService {
+}
+
+
+def util = new UtilService();
+//add new Property
+util.metaClass.name = 'Subramanian'; // setter method on metaClass
+println(util.name) //getter
+util.metaClass.city = "Chennai"
+println(util.city)
+util.metaClass.add = { a, b -> a + b };
+println util.add(10,10)
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+What if i dont want to use my own class (like UtilService) for meta Programming?
+
+Expando:
+
+Represents a dynamically expandable bean.
+
+def expando = new Expando()
+expando.language = 'Groovy';
+expando.multiply = {it*2};
+println(expando.language + " " + expando.multiply(2))
+//////////////////////////////////////////////////////////////////////////////////////////////
+                           Compile Time Meta Programming
+..............................................................................................
+
+Compile-time meta Programming in groovy allows code generation at compile-time.
+Compiler generally generates a program (compiled program)  based on a concept "AST"
+Abstract Syntax Tree - tree representation of compiled program.
+
+Source code----compile----ast---executed.
+
+Groovy hooks AST Transformation during compilation process.
+
+When compare to Runtime meta programming, compile time meta programming will have changes in the byte itself -  eager process.
+
+
+Implementation:
+  AST transformation is done via "Annotations"
+
+
+Annotation : to inject code during compile time.
+///////////////////////////////////////////////////////////////////////////////////////////////
+@groovy.transform
+
+1.ToString  -
+ package com.microgenesis.groovy.metaprog.compile
+
+import groovy.transform.ToString
+
+@ToString(excludes = ['age'],includeNames = true,includePackage = false)
+class Person {
+    String firstName;
+    String lastName;
+    String age;
+    String city;
+//    @Override
+//    String toString() {
+//        return "$firstName $lastName"
+//    }
+}
+def person = new Person(firstName: 'Subramanian', lastName: 'Murugan', age: 18, city: 'Coimbatore');
+println person.toString();
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+2.Equals and HashCode
+
+ equals : method used to test two objects are same- based on id property of both objects
+ hashcode: method used to get unquie identification no, every object in groovy has unquie.
+
+package com.microgenesis.groovy.metaprog.compile
+
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
+
+@ToString(excludes = ['age'], includeNames = true, includePackage = false)
+@EqualsAndHashCode(includes = ['id', 'city'])
+class Person {
+    long id;
+    String firstName;
+    String lastName;
+    String age;
+    String city;
+//    @Override
+//    String toString() {
+//        return "$firstName $lastName"
+//    }
+}
+
+
+//equals and hash code
+def p1 = new Person(id:1,firstName: 'Subramanian', lastName: 'Murugan', age: 18, city: 'Coimbatore');
+def p2 = new Person(id:1,firstName: 'Ram', lastName: 'Murugan', age: 18, city: 'Chennai');
+
+println p1.hashCode();
+println p2.hashCode()
+println p1.equals(p2)
+////////////////////////////////////////////////////////////////////////////////////////////
+
+3.TupleConstructor
+ 
+ In groovy , dynamically you can generate constructors based on map like syntax.
+ if you want traditional constructor calls, then you can use Tuple Constructors.
+
+
+import groovy.transform.ToString
+import groovy.transform.TupleConstructor
+
+//@TupleConstructor(excludes = ['lastName'])
+@TupleConstructor
+@ToString(includeNames = true, includePackage = false)
+class Customer {
+    long id;
+    String firstName;
+    String lastName;
+}
+
+//map-like syntax
+//def customer = new Customer(id:1,firstName: 'subramanian',lastName: 'murugan')
+def customer = new Customer(1,'Subramanian','Murugan');
+println customer.toString()
+///////////////////////////////////////////////////////////////////////////////////////
+if i want toString,EqualsAndHashcode,TupleConstructor on a class
+
+@ToString(excludes = ['age'], includeNames = true, includePackage = false)
+@EqualsAndHashCode(includes = ['id', 'city'])
+@TupleConstructor
+class Person { }
+
+Groovy offers a meta annotation, all in one - @Canonical
+
+Note: all properties are applicable 
+
+@Canonical()
+class Customer {
+    long id;
+    String firstName;
+    String lastName;
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+
+Sortable:
+ Implement Comparable interface for Object sorting
+
+package com.microgenesis.groovy.metaprog.compile
+
+import groovy.transform.Sortable
+
+@Sortable()
+class Employee {
+    String first;
+    String last
+    Integer dob;
+}
+def emplist = [
+        new Employee(first: 'Subu', last: 'Murugan', dob: 1980),
+        new Employee(first: 'Arun', last: 'Karthik', dob: 1997),
+        new Employee(first: 'Bala', last: 'Murugan', dob: 1976),
+        new Employee(first: 'James', last: 'Bond', dob: 1956)
+];
+println emplist.sort()*.first
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Builders:
+ It is one of the design pattern , used to create fluent apis.
+
+Groovy offers lot of builder classes:
+
+1.XML builder
+2.JSON builder
+3.Swing Builder
+etc......
+How builder looks like?
+
+ String str = "hello".toString().trim().toUpperCase().trim()  // method chaining
+
+
+How to create custom builder object?
+
+@Builder Annotation simplies creating our own builder patterns.
+
+Strategy:
+1.SimpleStrategy
+
+
+package com.microgenesis.groovy.metaprog.compile
+
+import groovy.transform.ToString
+import groovy.transform.builder.Builder
+import groovy.transform.builder.SimpleStrategy
+
+@ToString
+@Builder(builderStrategy = SimpleStrategy)
+class Message {
+    String from, to, subject, body
+}
+def message = new Message()
+        .setFrom("subu@gmail.com")
+        .setBody("Hello")
+        .setSubject("greet")
+println(message.from)
+
+ExternalStrategy:
+.................
+You can have bean class, you can have a separate Builder class
+
+package com.microgenesis.groovy.metaprog.compile
+
+import groovy.transform.builder.Builder
+import groovy.transform.builder.ExternalStrategy
+
+@Builder(builderStrategy = ExternalStrategy, forClass = Visitor)
+class VisitorBuilder {
+}
+
+package com.microgenesis.groovy.metaprog.compile
+
+class Visitor {
+    String first;
+    String last;
+    String email;
+}
+
+def vistor = new VisitorBuilder()
+        .first("Subramanian")
+        .last("Murugan")
+        .email("test@test.com")
+        .build();
+println vistor.email
+////////////////////////////////////////////////////////////////////////////////////////////
+Built in Builders:
+
+JSON builder:A builder for creating JSON payloads.
+
+...........
+1.To build JSON output from the list.
+
+import groovy.json.JsonBuilder
+
+def list = [id    : 1, name: 'Subramanian', city: 'Coimbatore',
+            skills: ['java', 'groovy', 'microservices']];
+
+def builder = new JsonBuilder(list)
+println builder.toPrettyString()
+
+def newBuilder = new JsonBuilder();
+
+newBuilder {
+    persons {
+        firstName 'Subramanian'
+        lastName 'Murgan'
+        address(city: 'Coimbatore', state: 'tamil Nadu')
+        skills 'Java', 'Groovy'
+    }
+            {
+                firstName 'Ram'
+                lastName 'Kumar'
+                address(city: 'Coimbatore', state: 'tamil Nadu')
+                skills 'Java', 'Groovy'
+            }
+}
+println newBuilder.toPrettyString()
+///////////////////////////////////////////////////////////////////////////////////////////
+How to convert JSON String into Object?
+JsonSlurper
+
+import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+
+def slurper = new JsonSlurper()
+String json = '{"person":{"name":"Guillaume","age":33,"pets":["dog","cat"]}}';
+def result = slurper.parseText(json)
+println(result)
+
+def list = [id    : 1, name: 'Subramanian', city: 'Coimbatore',
+            skills: ['java', 'groovy', 'microservices']];
+
+def builder = new JsonBuilder(list)
+String newJson = builder.toString();
+def obj = slurper.parseText(newJson)
+println obj
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Other Annotations:
+
+@Singleton
+@Log
+/////////////////////////////////////////*********************///////////////////////////////
+
+Exception Handling
+Collection Processing
+File IO Processing
+DSL
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+                                   DSL - Domain specific language
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+What is DSL?
+  A domain -specific language is a computer language specialized to a particular domain.
+
+eg dsl
+   HTML,Unix shell scripts,spread sheets,XML ,regular expressions,XSLT,CSS
+
+DSL are human readable programs, any body can read, understand,write.
+
+Types of DSL:
+
+1.External DSL
+    It is a language that's parsed independently of the host general purpose language.
+ eg ; CSS,HTML,Regular expressions
+2.Internal DSL
+   Internal DSL are particular form of api in a host general purpose language often
+refered to as "fluent interfaces" -  fluent api/builder based api.
+
+Groovy offers features to create internal DSLs.
+ 
+How to implement DSL in groovy?
+
+ We have many patterns.
+
+1.Command Chain pattern / builder pattern
+
+IN dsl programming there are two roles
+
+1.DSL Authors -  the people who build dsl
+2.DSL users -  the people who uses dsls
+
+Implementation:
+
+1.plain function
+2.function + closure + map + class with builder pattern
+
+
+calling dsl;
+
+ presentation('DSL',at:'Google',on:'Dec 30')
+
+ presentation 'DSL',at:'Google',on:'Dec 30'
+
+
+Basic DSL
+package com.microgenesis.groovy.dsl
+
+def presentation(Map args, String topic) {
+    println "I am Presenting about $topic at $args.at on $args.on"
+}
+
+presentation('DSL',at:'Google',on:'Dec 30')
+
+presentation 'DSL',at:'Google',on:'Dec 30'
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Builder pattern/Command Chains:
+...............................
+
+
+def talk(topic) {
+    def talkBuilder = new TalkBuilder(topic: topic)
+    talkBuilder; // Return talk builder Object
+}
+//builder class
+class TalkBuilder {
+    def topic, location, when;
+    //location function
+    def at(location) {
+        this.location = location
+        this; // returning the TalkBuilder object
+    }
+
+    def on(when) {
+        this.when = when;
+        println("I am Presenting $topic at $location on $when");
+        this;
+    }
+}
+
+talk('DSL').at('Microsoft').on('Dec 31')
+talk 'Spring With Groovy DSL ' at 'Google' on 'Jan 1'
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Function + map + Closure
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+//function + map + closure
+def speak(topic) {
+    ['at': { location ->
+        ['on': {
+            when -> println("I am Presenting $topic at $location on $when");
+        }]
+    }];
+}
+
+speak 'Spring With Groovy DSL ' at 'Google' on 'Jan 1'
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//please show the sequare_root of 100
+
+def show = { println it }
+def square_root = { Math.sqrt(it) }
+
+def please(action) {
+    [the: {
+        what ->
+            [of: {
+                number -> action(what(number))
+            }
+            ]
+    }]
+}
+please show the square_root of 100
+please show the square_root of 400
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Operator overloading :
+ 
+Operator overloading means chagining the meaning of operator.
+Operator overloading helps to build more readable dsl code
+
+def a = 10 + 10
+
+def c = 10.plus 10
+println c;
+def pow = 10.power 2
+println pow
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Exception Handling:
+
+package com.microgenesis.groovy.exceptionhandling
+
+import groovy.util.logging.Log
+
+
+class Calculator {
+    def divNumbers(def a = 1, def b = 1) {
+        //when we write risky code: code may cause runtime error at any time
+        try {
+            a.div b;
+        }
+        catch (Exception es) {
+             es.getMessage()
+        }
+    }
+}
+package com.microgenesis.groovy.exceptionhandling
+
+def calc = new Calculator();
+println calc.divNumbers(10,2)
+println calc.divNumbers(10,0)
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Collection:
+
+Groovy supports major collections
+-Range Operator
+-List
+-Set
+-Map
+
+
+Range:
+//range operator
+//printing values i to 10
+for (int i = 1; i <= 10; i++) {
+    println(i)
+}
+//Range
+1..10.each {println it}
+
+package com.microgenesis.groovy.collections
+
+//list
+def names = ['subramanian', 'Ram', 'Karthik'];
+
+names.each { println it }
+
+class Product {
+    Integer id;
+    String name;
+    double price;
+}
+
+def products = [
+        new Product(id: 1, name: 'phone', price: 10.5),
+        new Product(id: 2, name: 'camera', price: 90.5),
+        new Product(id: 3, name: 'Laptop', price: 1990.5)
+
+]
+products.each { println "${it.id} ${it.name} ${it.price}" }
+
+///api filter api which reutrns based true or false.
+
+def addNumbers(item) {
+    def items = [];
+    items.add(item);
+    items;
+}
+
+for (int i = 0; i < 10; i++) {
+    addNumbers(i).each { println it }
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+//set avoids duplicates
+println "Set"
+def uniqueNumbers = [1, 1, 2, 4, 5, 5, 6, 7, 8, 9, 8] as Set;
+uniqueNumbers.each {println it}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+def empDetails = [
+        id:1,
+        name:'Subramnian',
+        salary:1000
+
+];
+println "$empDetails.id $empDetails.name $empDetails.salary"
+
+empDetails.each {key,value->println "$key $value"}
+///////////////////////////////////////////////////////////////////////////////////////////////
+def letters = 'a'..'z';
+letters.each {println it}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+File IO:
+package com.microgenesis.groovy.fileio
+
+def readFile() {
+    try {
+        def file = new File("greetings.txt")
+        file.eachLine { println "$it" }
+    }
+    catch (Exception es) {
+        println es.getMessage()
+    }
+}
+
+readFile()
+
+//list all files from the directory
+def listFiles() {
+    try {
+        def dir = new File(/c:\ /)
+        dir.eachFile { file -> println file.name }
+    }
+    catch (Exception es) {
+        println es.getMessage()
+    }
+}
+
+listFiles()
+
+def writeData(info) {
+    try {
+        new File('foo.txt').withWriter('utf-8') { writer ->
+            writer.writeLine(info)
+        }
+    }
+    catch (Exception es) {
+        println es.getMessage()
+    }
+}
+
+writeData("Hello!! Greetings!!")
+
+//file copy
+
+def fileCopy() {
+    try {
+        def source = new File("foo.txt")
+        def dest = new File("foocopy.txt")
+        //copy
+         dest << source.text
+    }
+    catch (Exception es) {
+        println es.getMessage()
+    }
+}
+fileCopy()
 
 
 
@@ -4146,6 +5624,45 @@ Advanced Groovy:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+ 
 
 
 
